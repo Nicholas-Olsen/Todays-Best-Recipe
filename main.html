@@ -5,11 +5,55 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>오늘의레시피: 메인</title>
     <style>
-        body { background-color: #f5f1ee; font-family: sans-serif; text-align: center; }
-        h1 { color: #292b6f; }
-        .grid { display: flex; justify-content: center; gap: 20px; margin-top: 20px; }
-        .category { width: 150px; height: 150px; border: 1px solid #ccc; background: white; display: flex; flex-direction: column; align-items: center; justify-content: center; }
-        img { width: 100px; height: 100px; }
+        body { 
+            background-color: #f5f1ee; 
+            font-family: sans-serif; 
+            text-align: center; 
+        }
+        h1 { 
+            color: #292b6f; 
+            font-size: 36px; 
+            margin-top: 50px; 
+        }
+        .grid { 
+            display: flex; 
+            flex-wrap: wrap; 
+            justify-content: center; 
+            gap: 30px; 
+            margin-top: 40px; 
+        }
+        .category { 
+            width: 150px; 
+            height: 150px; 
+            border: 1px solid #ccc; 
+            background: white; 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            justify-content: center; 
+        }
+        .category img { 
+            width: 120px; 
+            height: 120px; 
+        }
+        .category p { 
+            color: #646476; 
+            font-size: 18px; 
+            margin-top: 10px; 
+        }
+        .category.bold p { 
+            font-weight: bold; 
+        }
+        .add-category { 
+            width: 120px; 
+            height: 120px; 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            font-size: 50px; 
+            color: #dbdbe5; 
+            border: 5px solid #9999a2; 
+        }
     </style>
 </head>
 
@@ -19,8 +63,15 @@
         <div class="category"><img src="korean.jpg" alt="한식"><p>한식</p></div>
         <div class="category"><img src="chinese.jpg" alt="중식"><p>중식</p></div>
         <div class="category"><img src="western.jpg" alt="양식"><p>양식</p></div>
-        <div class="category" onclick="location.href='recommend.html'">
-            <img src="empty.jpg" alt="추천"><p>추천</p>
+        
+        <div class="category"><img src="japanese.jpg" alt="일식"><p>일식</p></div>
+        <div class="category"><img src="snack.jpg" alt="분식"><p>분식</p></div>
+        <div class="category"><img src="dessert.jpg" alt="디저트"><p>디저트</p></div>
+
+        <div class="category"><img src="health.jpg" alt="건강식"><p>건강식</p></div>
+        <div class="category bold" onclick="location.href='recommend.html'">
+            <div class="add-category">+</div>
+            <p>추천</p>
         </div>
     </div>
 </body>
