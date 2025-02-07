@@ -3,25 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>오늘의레시피: 메인</title>
+    <title>오늘의레시피: 추천</title>
     <style>
         body { background-color: #f5f1ee; font-family: sans-serif; text-align: center; }
         h1 { color: #292b6f; }
-        .grid { display: flex; justify-content: center; gap: 20px; margin-top: 20px; }
-        .category { width: 150px; height: 150px; border: 1px solid #ccc; background: white; display: flex; flex-direction: column; align-items: center; justify-content: center; }
-        img { width: 100px; height: 100px; }
+        .input-section { margin-top: 20px; }
     </style>
 </head>
-
 <body>
-    <h1>오늘의 레시피는?</h1>
-    <div class="grid">
-        <div class="category"><img src="korean.jpg" alt="한식"><p>한식</p></div>
-        <div class="category"><img src="chinese.jpg" alt="중식"><p>중식</p></div>
-        <div class="category"><img src="western.jpg" alt="양식"><p>양식</p></div>
-        <div class="category" onclick="location.href='recommend.html'">
-            <img src="empty.jpg" alt="추천"><p>추천</p>
-        </div>
+    <h1>내가 가진 재료는?</h1>
+    <div class="input-section">
+        <input type="file" accept="image/*"><br>
+        <input type="text" placeholder="재료를 입력하세요"><br>
+        <input type="checkbox"> 이미지 또는 텍스트 입력 선택<br>
+        <button>레시피 추천</button>
     </div>
 </body>
 </html>
