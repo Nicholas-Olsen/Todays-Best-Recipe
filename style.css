@@ -19,9 +19,9 @@
 }
 
 /* 각 이미지 위치 조정 */
-.floating-img:nth-child(1) { left: 10%; top: 20%; }
-.floating-img:nth-child(2) { left: 50%; top: 30%; }
-.floating-img:nth-child(3) { left: 80%; top: 50%; }
+.floating-img:nth-child(1) { left: 10%; top: 15%; }
+.floating-img:nth-child(2) { left: 50%; top: 25%; }
+.floating-img:nth-child(3) { left: 80%; top: 40%; }
 
 /* 애니메이션: 부드럽게 떠다니기 */
 @keyframes floatAnimation {
