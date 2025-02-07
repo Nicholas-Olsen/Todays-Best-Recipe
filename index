@@ -1,0 +1,24 @@
+#6조
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>오늘의 레시피는?</title>
+    <style>
+        body { background-color: #F8F6F0; font-family: sans-serif; text-align: center; }
+        h1 { color: navy; }
+        .login-box { margin: 50px auto; width: 300px; padding: 20px; border: 1px solid #ccc; background: white; }
+        input, button { margin-top: 10px; width: 100%; padding: 8px; }
+    </style>
+</head>
+<body>
+    <h1>오늘의 레시피는?</h1>
+    <div class="login-box">
+        <input type="text" placeholder="아이디">
+        <input type="password" placeholder="비밀번호">
+        <button onclick="location.href='G6_main.html'">로그인</button>
+    </div>
+</body>
+</html>
