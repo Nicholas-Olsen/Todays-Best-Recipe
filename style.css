@@ -10,34 +10,41 @@
     pointer-events: none;
 }
 
-/* 떠다니게 */
+/* 떠다니는 이미지 스타일 */
 .floating-img {
     position: absolute;
-    width: 75vw; 
+    width: 60vw; /* 반응형 크기 조정 */
     opacity: 0.8; /* 더 연하게 해서 배경 느낌 */
     animation: floatAnimation 15s ease-in-out infinite alternate;
-    margin-top: 30px; 
+    margin-top: 30px; /* 이미지 간 상하 간격 늘리기 */
 }
 
 /* 각 이미지 위치 조정 */
 .floating-img:nth-child(1) { 
     left: 10%; 
     top: 15%; 
-    animation: floatAnimation 15s ease-in-out infinite alternate;
     background-image: url('https://nicholas-olsen.github.io/Todays-Best-Recipe/images/image1.png');
     background-repeat: repeat-x; 
-    background-size: 60vw auto; 
+    background-size: 60vw auto; /* 수평으로 반복, 높이는 자동 */
     animation: floatBackground 15s ease-in-out infinite alternate;
 }
 
 .floating-img:nth-child(2) { 
     left: 50%; 
     top: 25%; 
+    background-image: url('https://nicholas-olsen.github.io/Todays-Best-Recipe/images/image2.png');
+    background-repeat: repeat-x; 
+    background-size: 60vw auto;
+    animation: floatBackground 15s ease-in-out infinite alternate;
 }
 
 .floating-img:nth-child(3) { 
     left: 80%; 
     top: 40%; 
+    background-image: url('https://nicholas-olsen.github.io/Todays-Best-Recipe/images/image3.png');
+    background-repeat: repeat-x; 
+    background-size: 60vw auto;
+    animation: floatBackground 15s ease-in-out infinite alternate;
 }
 
 /* 애니메이션: 좌우 왕복 */
@@ -47,6 +54,7 @@
     100% { transform: translateX(-40px); }
 }
 
+/* 배경 이미지 좌우 왕복 애니메이션 */
 @keyframes floatBackground {
     0% { transform: translateX(0); }
     50% { transform: translateX(40px); }
