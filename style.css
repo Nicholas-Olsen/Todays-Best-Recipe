@@ -1,0 +1,36 @@
+.floating-container {
+    position: fixed;
+    bottom: 10%; /* 아래쪽에서 10% 위로 띄움 */
+    left: 0;
+    width: 100%;
+    height: auto; /* 높이를 자동으로 조절 */
+    pointer-events: none; /* 클릭 방지 */
+}
+
+.floating-img {
+    position: absolute;
+    width: 150px; /* 이미지 크기 조절 */
+    opacity: 0.7; /* 약간 투명하게 */
+    animation: floatAnimation 10s linear infinite alternate;
+}
+
+/* 각 이미지의 개별 애니메이션 설정 */
+.floating-img:nth-child(odd) {
+    animation: floatAnimationLeft 15s linear infinite alternate;
+}
+
+.floating-img:nth-child(even) {
+    animation: floatAnimationRight 15s linear infinite alternate;
+}
+
+/* 왼쪽 방향 이동 */
+@keyframes floatAnimationLeft {
+    0% { transform: translateX(-10%) translateY(0); }
+    100% { transform: translateX(10%) translateY(-20px); } /* 이동 범위를 조금 줄임 */
+}
+
+/* 오른쪽 방향 이동 */
+@keyframes floatAnimationRight {
+    0% { transform: translateX(10%) translateY(0); }
+    100% { transform: translateX(-10%) translateY(-20px); } /* 이동 범위를 조금 줄임 */
+}
