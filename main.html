@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>오늘의레시피: 메인</title>
-    <style>
-             body { 
+ <style>
+        body { 
             background-color: #f5f1ee; 
             font-family: sans-serif; 
             text-align: center; 
@@ -16,10 +16,10 @@
             margin-top: 50px; 
         }
         .grid { 
-            display: flex; 
-            flex-wrap: wrap; 
-            justify-content: center; 
+            display: grid; 
+            grid-template-columns: repeat(3, 150px); 
             gap: 30px; 
+            justify-content: center; 
             margin-top: 40px; 
         }
         .category { 
@@ -65,9 +65,14 @@
             margin: 0;
             color: #dbdbe5;
             font-size: 50px;
-            border: 5px solid #9999a2;
+            border: 3px solid #c6c6cc;
             width: 100%;
             text-align: center;
+            text-shadow: 
+                1px 1px 0 #9999a2, 
+                -1px -1px 0 #9999a2, 
+                1px -1px 0 #9999a2, 
+                -1px 1px 0 #9999a2;  /* 굵은 외곽선 효과 */
         }
     </style>
 </head>
@@ -84,7 +89,7 @@
         <div class="category"><img src="https://nicholas-olsen.github.io/Todays-Best-Recipe/images/food_Dessert2.png" alt="디저트"><p>디저트</p></div>
 
         <div class="category"><img src="https://nicholas-olsen.github.io/Todays-Best-Recipe/images/food_Health2.png" alt="건강식"><p>건강식</p></div>
-        <div class="category bold" onclick="location.href='recommend.html'">
+        <div class="add-category-container" onclick="location.href='recommend.html'">
             <div class="add-category">+</div>
             <p>추천</p>
         </div>
