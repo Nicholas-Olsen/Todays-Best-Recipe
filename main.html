@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>오늘의레시피: 메인</title>
- <style>     
+    <style>     
         body { 
             background-color: #f5f1ee; 
             font-family: sans-serif; 
@@ -17,28 +17,30 @@
         }
         .grid { 
             display: grid; 
-            grid-template-columns: repeat(3, 150px); 
+            grid-template-columns: repeat(3, 200px); 
             gap: 30px; 
             justify-content: center; 
             margin-top: 40px; 
         }
         .category { 
-            width: 150px; 
-            height: 150px; 
+            width: 200px; 
+            height: 200px; 
             border: 1px solid #ccc; 
             background: white; 
             display: flex; 
             flex-direction: column; 
             align-items: center; 
             justify-content: center; 
+            overflow: hidden;
         }
         .category img { 
-            width: 120px; 
-            height: 120px; 
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* 긴 쪽을 잘라서 정사각형 형태로 맞춤 */
         }
         .category p { 
             color: #646476; 
-            font-size: 18px; 
+            font-size: 20px; 
             margin-top: 10px; 
         }
         .category.bold p { 
@@ -55,17 +57,18 @@
             border: 5px solid #9999a2; 
         }
         .add-category-container { 
-            width: 150px; 
-            height: 150px; 
+            width: 200px; 
+            height: 200px; 
             display: flex; 
             justify-content: center; 
             align-items: center; 
+            background-color: white; 
+            border: 1px solid #ccc;
         }
         .add-category-container p { 
             margin: 0;
             color: #dbdbe5;
             font-size: 50px;
-            border: 3px solid #c6c6cc;
             width: 100%;
             text-align: center;
             text-shadow: 
@@ -74,11 +77,25 @@
                 1px -1px 0 #9999a2, 
                 -1px 1px 0 #9999a2; 
         }
+        .back-button {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            padding: 10px 20px;
+            background-color: #292b6f;
+            color: white;
+            text-decoration: none;
+            font-size: 16px;
+            border-radius: 5px;
+        }
+        .back-button:hover {
+            background-color: #1e1e64;
+        }
     </style>
 </head>
 
 <body>
-    
+    <a href="index.html" class="back-button">로그인 화면으로 돌아가기</a>
     <h1>오늘의 레시피는?</h1>
     <div class="grid">
         <div class="category"><img src="https://nicholas-olsen.github.io/Todays-Best-Recipe/images/food_KOR2.png" alt="한식"><p>한식</p></div>
@@ -90,9 +107,7 @@
         <div class="category"><img src="https://nicholas-olsen.github.io/Todays-Best-Recipe/images/food_Dessert2.png" alt="디저트"><p>디저트</p></div>
 
         <div class="category"><img src="https://nicholas-olsen.github.io/Todays-Best-Recipe/images/food_Health2.png" alt="건강식"><p>건강식</p></div>
-        <div class="add-category-container" onclick="location.href='recommend.html'">
-            <div class="add-category">+</div>
-            <p>추천</p>
+        <div class="add-category-container" onclick="location.href='recommend.html'"><img src="https://nicholas-olsen.github.io/Todays-Best-Recipe/images/food_+.png" alt="추천"><p>추천</p></div>
         </div>
     </div>
 </body>
