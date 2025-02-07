@@ -5,16 +5,16 @@
     left: 0;
     width: 100%;
     height: 100%;
-    z-index: -1; /* 배경 뒤로 이동 */
-    overflow: hidden; /* 넘치는 부분 숨김 */
-    pointer-events: none; /* 클릭 방지 */
+    z-index: -1; 
+    overflow: hidden;
+    pointer-events: none; 
 }
 
 /* 떠다니는 이미지 스타일 */
 .floating-img {
     position: absolute;
-    width: 15vw; /* 반응형 크기 조정 */
-    opacity: 0.7; /* 더 연하게 해서 배경 느낌 */
+    width: 60vw; /* 반응형 크기 조정 */
+    opacity: 0.8; /* 더 연하게 해서 배경 느낌 */
     animation: floatAnimation 15s ease-in-out infinite alternate;
 }
 
@@ -23,9 +23,9 @@
 .floating-img:nth-child(2) { left: 50%; top: 25%; }
 .floating-img:nth-child(3) { left: 80%; top: 40%; }
 
-/* 애니메이션: 부드럽게 떠다니기 */
+/* 애니메이션: 좌우 왕복 */
 @keyframes floatAnimation {
-    0% { transform: translateY(0) translateX(0); }
-    50% { transform: translateY(-40px) translateX(20px); }
-    100% { transform: translateY(0) translateX(-20px); }
+    0% { transform: translateX(0); }
+    50% { transform: translateX(40px); }
+    100% { transform: translateX(-40px); }
 }
