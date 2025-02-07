@@ -29,28 +29,28 @@ body, html {
     background-size: contain; /* 이미지 크기 자동 맞춤 */
     opacity: 0.8;
     background-repeat: repeat-x;
-    z-index: -1; /* 배경이 다른 요소들 뒤에 오도록 설정 */
+    z-index: -5; /* 배경이 다른 요소들 뒤에 오도록 설정 */
 }
 
 .belt1 {
     background-image: url('https://nicholas-olsen.github.io/Todays-Best-Recipe/images/image1.png');
     background-size: contain; /* 이미지 크기를 맞추기 */
     background-repeat: repeat-x; /* 이미지를 수평으로 반복 */
-    animation: moveLeft 10s linear infinite;
+    animation: moveLeft 20s linear infinite;
 }
 
 .belt2 {
     background-image: url('https://nicholas-olsen.github.io/Todays-Best-Recipe/images/image2.png');
     background-size: contain;
     background-repeat: repeat-x;
-    animation: moveRight 10s linear infinite;
+    animation: moveLeft 20s linear infinite;
 }
 
 .belt3 {
     background-image: url('https://nicholas-olsen.github.io/Todays-Best-Recipe/images/image3.png');
     background-size: contain;
     background-repeat: repeat-x;
-    animation: moveLeft 10s linear infinite;
+    animation: moveLeft 20s linear infinite;
 }
 
 @keyframes moveLeft {
