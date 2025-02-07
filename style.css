@@ -13,7 +13,7 @@
 /* 떠다니는 이미지 스타일 */
 .floating-img {
     position: absolute;
-    width: 85vw; /* 반응형 크기 조정 */
+    width: 60vw; /* 반응형 크기 조정 */
     opacity: 0.8; /* 더 연하게 해서 배경 느낌 */
     height: auto;
     background-repeat: repeat-x; 
@@ -25,19 +25,22 @@
 #image1 {
     background-image: url('https://nicholas-olsen.github.io/Todays-Best-Recipe/images/image1.png');
     left: 0;
-    top: 20%; /* 첫 번째 이미지 위치 */
+    top: 15%; /* 첫 번째 이미지 위치 */
+    width: 100%; /* 이미지 크기를 화면 너비에 맞추기 */
 }
 
 #image2 {
     background-image: url('https://nicholas-olsen.github.io/Todays-Best-Recipe/images/image2.png');
     left: 50%;
-    top: 35%; /* 두 번째 이미지 위치 */
+    top: 30%; /* 두 번째 이미지 위치 */
+    width: 100%;
 }
 
 #image3 {
     background-image: url('https://nicholas-olsen.github.io/Todays-Best-Recipe/images/image3.png');
     left: 80%;
-    top: 50%; /* 세 번째 이미지 위치 */
+    top: 45%; /* 세 번째 이미지 위치 */
+    width: 100%;
 }
 
 /* 애니메이션: 좌우 왕복 */
