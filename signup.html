@@ -6,7 +6,7 @@
     <title>오늘의레시피: 회원가입</title>
     <style>
         body { 
-            background-color:#f5f1ee; 
+            background-color: #f5f1ee; 
             font-family: sans-serif; 
             text-align: center; 
             margin: 0; 
@@ -37,7 +37,7 @@
         
         /* 회원가입 박스 */
         .signup-box { 
-            margin: 50px auto; 
+            margin: 100px auto; /* 상단 여백 추가 */
             width: 400px;  
             padding: 20px; 
             border: 1px solid #ccc; 
@@ -86,7 +86,7 @@
 </head>
 <body>
     <!-- 로그인 화면으로 돌아가기 버튼 -->
-        <a href="index.html" class="back-btn">로그인 화면으로 돌아가</a>
+    <a href="index.html" class="back-btn">로그인 화면으로 돌아가기</a>
     
     <h1>회원 가입</h1>
     <div class="signup-box">
@@ -110,7 +110,7 @@
             <input type="password" id="confirm-password" placeholder="비밀번호 확인">
         </div>
         
-       <button onclick="signup()">등록</button>
+        <button onclick="signup()">등록</button>
     </div>
     
     <!-- Firebase 및 회원가입 스크립트 연결 -->
