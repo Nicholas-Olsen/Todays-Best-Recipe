@@ -1,42 +1,97 @@
+
 <!DOCTYPE html>
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>회원가입</title>
+    <title>오늘의레시피: 회원가입</title>
     <style>
-        body { background-color: #faf7f4; font-family: sans-serif; text-align: center; margin: 0; }
+        body { 
+            background-color: #faf7f4; 
+            font-family: sans-serif; 
+            text-align: center; 
+            margin: 0; 
+        }
         h1 { color: navy; }
+
+        /* 전체 회원가입 폼 박스 스타일 */
         .signup-box { 
             margin: 50px auto; 
-            width: 320px; 
+            width: 400px;
             padding: 20px; 
             border: 1px solid #ccc; 
             background: white; 
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
-        input, button { 
+
+        /* 입력 필드와 라벨을 가로 정렬 */
+        .input-group {
+            display: flex;
+            align-items: center;
+            width: 100%;
+            margin-bottom: 10px;
+        }
+
+        /* 라벨 스타일 */
+        .input-group label {
+            width: 100px;
+            text-align: left;
+            font-weight: bold;
+        }
+
+        /* 입력 필드 스타일 */
+        .input-group input {
+            flex: 1;
+            padding: 8px;
+            border: 1px solid #ccc;
+        }
+
+        /* 등록 버튼 스타일 */
+        button { 
             margin-top: 10px; 
             width: 100%; 
-            padding: 8px; 
+            padding: 10px; 
+            background-color: #606a8a; 
+            color: white; 
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background-color: #606a8a;
         }
     </style>
 </head>
 <body>
     <h1>회원 가입</h1>
     <div class="signup-box">
-        <label>닉네임</label>
-        <input type="text" placeholder="닉네임">
+        <div class="input-group">
+            <label for="nickname">닉네임</label>
+            <input type="text" id="nickname" placeholder="닉네임">
+        </div>
         
-        <label>이메일</label>
-        <input type="email" placeholder="이메일">
+        <div class="input-group">
+            <label for="email">이메일</label>
+            <input type="email" id="email" placeholder="이메일">
+        </div>
         
-        <label>비밀번호</label>
-        <input type="password" placeholder="비밀번호">
+        <div class="input-group">
+            <label for="password">비밀번호</label>
+            <input type="password" id="password" placeholder="비밀번호">
+        </div>
         
-        <label>비밀번호 확인</label>
-        <input type="password" placeholder="비밀번호 확인">
+        <div class="input-group">
+            <label for="confirm-password">비밀번호 확인</label>
+            <input type="password" id="confirm-password" placeholder="비밀번호 확인">
+        </div>
         
-        <button>등록</button>
+        <button onclick="signup()">등록</button>
     </div>
+
+    <!-- Firebase 연결 -->
+    <script type="module" src="app.js"></script>
 </body>
 </html>
