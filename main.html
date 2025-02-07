@@ -40,7 +40,7 @@
         .category p { 
             color: #646476; 
             font-size: 20px; 
-            margin-top: 5px;  /* 상하 간격을 좁힘 */
+            margin-top: 5px;  
         }
         .category.bold p { 
             font-weight: bold; 
@@ -76,6 +76,7 @@
                 1px -1px 0 #9999a2, 
                 -1px 1px 0 #9999a2; 
         }
+        /* 로그인 화면으로 */
         .back-button {
             position: absolute;
             top: 20px;
@@ -97,10 +98,20 @@
             color: white;
         }
 
+        .category-link {
+            text-decoration: none; /* 밑줄 없애기 */
+            display: inline-block;
+            width: 100%;
+        }
+
+        .category-link:hover .category {
+            background-color: #f0f0f0; 
+        }
     </style>
 </head>
 
 <body>
+    <!-- 로그아웃 버튼 (a 태그로) -->
     <a href="index.html" class="back-button">로그아웃하기</a>
     <h1>오늘의 레시피는?</h1>
     <div class="grid">
@@ -113,8 +124,9 @@
         <div class="category"><img src="https://nicholas-olsen.github.io/Todays-Best-Recipe/images/food_Dessert2.png" alt="디저트"><p>디저트</p></div>
 
         <div class="category"><img src="https://nicholas-olsen.github.io/Todays-Best-Recipe/images/food_Health2.png" alt="건강식"><p>건강식</p></div>
-        <!-- 추천 카테고리를 클릭하면 recommendation.html로 이동 -->
-        <a href="recommendation.html">
+        
+        <!-- 추천 카테고리>> recommendation.html로 이동 -->
+        <a href="recommendation.html" class="category-link">
             <div class="category"><img src="https://nicholas-olsen.github.io/Todays-Best-Recipe/images/food_+.png" alt="추천"><p>추천</p></div>
         </a>
     </div>
