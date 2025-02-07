@@ -13,11 +13,11 @@
             margin: 0; 
         }
 
-        /* 제목 스타일 */
+        /* 제목부분 스타일 */
         h1 { 
             color: #292b6f; 
             font-size: 2.8em; 
-            margin-top: 80px; /* 제목을 조금 더 아래로 */
+            margin-top: 80px; 
         }
 
         .login-box { 
@@ -42,7 +42,7 @@
             box-sizing: border-box;
         }
 
-        /* 회원가입 버튼 */
+        /* 회원가입... */
         .signup-btn {
             position: absolute;
             top: 20px;
@@ -57,14 +57,15 @@
             font-weight: bold;
             text-decoration: none;
             display: inline-block;
+            transition: background-color 0.3s ease;
         }
 
         .signup-btn:hover {
             background-color: #676779; /* hover 색 */
         }
 
-        /* 로그인 버튼 */
-        button { 
+        /* 로그인 하는 부분 */
+        .login-btn {
             margin-top: 10px; 
             width: 100%; 
             padding: 10px; 
@@ -74,9 +75,12 @@
             cursor: pointer;
             font-size: 16px;
             font-weight: bold;
+            text-decoration: none;
+            display: inline-block;
+            transition: background-color 0.3s ease;
         }
 
-        button:hover {
+        .login-btn:hover {
             background-color: darkblue;
         }
     </style>
@@ -90,7 +94,8 @@
     <div class="login-box">
         <input type="text" placeholder="이메일">
         <input type="password" placeholder="비밀번호">
-        <button onclick="location.href='main.html'">로그인</button>
+        <!-- 로그인 버튼 (a 태그로 바꿈) -->
+        <a href="main.html" class="login-btn">로그인</a>
     </div>
     <div class="background">
         <div class="belt belt1"></div>
