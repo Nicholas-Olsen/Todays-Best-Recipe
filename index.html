@@ -5,12 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>오늘의 레시피는? 시작</title>
     <style>
-        body { background-color: #f5f1ee; font-family: sans-serif; text-align: center; margin: 0; }
+        body { 
+            background-color: #f5f1ee; 
+            font-family: sans-serif; 
+            text-align: center; 
+            margin: 0; 
+        }
         h1 { color: #292b6f; }
 
         .login-box { 
             margin: 50px auto; 
-            width: 400px;  /* 기존보다 더 넓게 조정 */
+            width: 400px;  /* 로그인 박스 너비 */
             padding: 20px; 
             border: 1px solid #ccc; 
             background: white; 
@@ -18,8 +23,19 @@
             flex-direction: column;
             align-items: center;
         }
-      
-        /* 오른쪽 상단 회원가입 링크 */
+
+        /* 입력 필드 스타일 수정 */
+        .login-box input { 
+            width: 100%;  /* 부모 요소(login-box)의 전체 너비를 차지하도록 설정 */
+            height: 45px;  /* 기본 높이보다 1.8배 증가 */
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            margin-bottom: 20px; /* 두 입력 칸 사이 간격 추가 */
+            box-sizing: border-box; /* 패딩 포함하여 너비 조정 */
+        }
+
+        /* 회원가입 링크 */
         .signup-label {
             position: absolute;
             top: 20px;
@@ -30,6 +46,7 @@
             text-decoration: none;
         }
 
+        /* 로그인 버튼 스타일 */
         button { 
             margin-top: 10px; 
             width: 100%; 
@@ -39,6 +56,7 @@
             border: none;
             cursor: pointer;
             font-size: 16px;
+            font-weight: bold;
         }
 
         button:hover {
