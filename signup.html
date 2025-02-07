@@ -39,7 +39,7 @@
         
         /* 회원가입 박스 */
         .signup-box { 
-            margin: 100px auto; /* 상단 여백 추가 */
+            margin: 100px auto; 
             width: 400px;  
             padding: 20px; 
             border: 1px solid #ccc; 
@@ -49,7 +49,6 @@
             align-items: center;
         }
 
-        /* 입력 필드와 라벨*/
         .input-group {
             display: flex;
             align-items: center;
@@ -112,7 +111,8 @@
             <input type="password" id="confirm-password" placeholder="비밀번호 확인">
         </div>
         
-        <button onclick="signup()">등록</button>
+        <!-- '등록' 버튼을 a 태그로 -->
+        <a href="#" class="submit-btn" onclick="signup()">등록</a>
     </div>
     
     <!-- Firebase 및 회원가입 스크립트 연결 -->
