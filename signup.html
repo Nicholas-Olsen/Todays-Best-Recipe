@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>오늘의레시피: 회원가입</title>
+    <link rel="stylesheet" href="style.css">
     <style>
         body { 
             background-color: #f5f1ee; 
@@ -47,7 +48,7 @@
             border-radius: 10px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
             z-index: 1;
-            background-color: rgba(255, 255, 255, 0.8); /* 반투명 배경 */
+            background-color: rgba(255, 255, 255, 0.8); 
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -121,8 +122,16 @@
             <input type="password" id="confirm-password" placeholder="비밀번호 확인">
         </div>
         
-        <!-- '등록' 버튼을 a 태그로 -->
+        <!-- 등록 a 태그 -->
         <a href="#" class="submit-btn" onclick="signup()">등록</a>
+    </div>
+
+    <div class="container">
+        <div class="belt belt1"></div>
+        <div class="belt belt2 reverse"></div> <!-- reverse 클래스 추가 -->
+        <div class="belt belt3"></div>
+        <div class="belt belt4 reverse"></div> <!-- reverse 클래스 추가 -->
+        <div class="belt belt5"></div>
     </div>
     
     <!-- Firebase 및 회원가입 스크립트 연결 -->
