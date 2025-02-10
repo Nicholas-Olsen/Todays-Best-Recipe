@@ -25,10 +25,13 @@
             width: 400px;  
             padding: 20px; 
             border: 1px solid #ccc; 
-            background: white; 
+            border-radius: 10px;
+            background-color: rgba(255, 255, 255, 0.8); /* 반투명 배경 */
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
             display: flex;
             flex-direction: column;
             align-items: center;
+            z-index: 1; /* 폼을 배경 이미지 위로 올리기 */
         }
 
         /* 입력 필드 */
