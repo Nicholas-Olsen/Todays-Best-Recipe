@@ -8,28 +8,28 @@
         body { background-color: #f5f1ee; font-family: sans-serif; text-align: center; }
         h1 { color: #2a3478; }
 
-        /* Recom-box 스타일 */
         .recom-box {
             border: 1px solid #ccc;
             border-radius: 10px;
-            background-color: rgba(255, 255, 255, 0.8); /* 반투명 배경 */
+            background-color: rgba(255, 255, 255, 0.8); 
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
             display: flex;
             flex-direction: column;
             align-items: center;
             padding: 20px;
-            width: 80%; /* 폼 크기 */
+            width: 60%;
             margin: 0 auto;
         }
 
-        .recom-box input {
+        .recom-box textarea {
             width: 100%;
-            height: 45px;
+            height: 180px; /* 세로로 긴 박스 */
             padding: 10px;
             font-size: 16px;
             border: 1px solid #ccc;
             border-radius: 5px;
-            margin-bottom: 15px; /* 입력 필드 간격 */
+            margin-bottom: 15px; 
+            resize: vertical; 
         }
 
         /* 레시피 추천 버튼 스타일 */
@@ -48,15 +48,14 @@
         }
 
         .recom-btn:hover {
-            background-color: #676779; /* hover 색 */
+            background-color: #676779; 
         }
     </style>
 </head>
 <body>
     <h1>내가 가진 재료는?</h1>
     <div class="recom-box">
-        <input type="text" placeholder="재료를 입력하세요"><br>
-        <input type="text" placeholder="추가 재료를 입력하세요"><br> <!-- 재료 입력 필드 추가 -->
+        <textarea placeholder="재료를 입력하세요"></textarea><br>
         <button class="recom-btn" onclick="window.location.href='result.html'">레시피 추천</button>
     </div>
 </body>
