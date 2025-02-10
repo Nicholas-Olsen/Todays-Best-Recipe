@@ -17,10 +17,11 @@ body {
     z-index: -1; 
 }
 
-/* 기qhs */
+/* 기본세팅 */
 .belt {
     width: 100vw; 
     height: 100px; 
+    opacity: 0.6; 
     background-size: auto 100%; 
     background-repeat: repeat-x;
     animation: move-left 15s linear infinite;
