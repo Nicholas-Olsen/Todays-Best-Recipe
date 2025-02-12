@@ -12,6 +12,7 @@
     
     <h1>오늘의 레시피 추천</h1>
     <form action="{% url 'home' %}" method="POST">
+        {% csrf_token %}                                                                                     <!-- 토큰 추가-->
         <div class="recom-box">
             <textarea placeholder="레시피 이름"></textarea><br>
             <button type="submit" class="finish-btn" >페이지 종료</button>
