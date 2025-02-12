@@ -1,46 +1,52 @@
-
+{% load static %} <!-- static 파일 로드 -->
 <!DOCTYPE html>
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>오늘의 레시피는? 시작</title>
-    <link rel="stylesheet" href="../../static/css/style.css">
-    <link rel="stylesheet" href="../../static/css/home.css">
-    <style>
-
-    </style>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}"> <!-- Django static 태그 적용 -->
+    <link rel="stylesheet" href="{% static 'css/home.css' %}">
 </head>
 
 <body>
     <!-- 회원가입 버튼 -->
     <a href="{% url 'signup' %}" class="signup-btn">회원가입</a>
 
+    <!-- 오류 메시지를 위한 모달 -->
     <div id="errorModal" class="modal">           
         <div class="modal-content">
             <p id="modalMessage"></p>
             <button onclick="closeModal()">확인</button>
         </div>
     </div>
+
+    <!-- 오류 메시지를 숨겨진 데이터 속성으로 저장 -->
+    <div id="errorMessages" data-messages="
+        {% for message in messages %}
+            {% if message.tags == 'error' %}{{ message }}{% endif %}
+        {% endfor %}">
+    </div>
     
     <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            let errorContainer = document.getElementById("errorMessages");
+            let errorMessage = errorContainer.getAttribute("data-messages").trim();
+
+            if (errorMessage) {
+                showModal(errorMessage);
+            }
+        });
+
         function showModal(message) {
             document.getElementById("modalMessage").textContent = message;
             document.getElementById("errorModal").style.display = "block";
         }
-    
+
         function closeModal() {
             document.getElementById("errorModal").style.display = "none";
         }
-    
-        {% if messages %}
-            {% for message in messages %}
-                {% if message.tags == "error" %}
-                    showModal("{{ message }}");
-                {% endif %}
-            {% endfor %}
-        {% endif %}
-    </script>                          
+    </script>                           
     
     <h1>오늘의 레시피는?</h1>
     <form action="{% url 'login' %}" method="POST">
@@ -48,7 +54,6 @@
         <div class="login-box">
             <input type="text" id="nickname" name="nickname" placeholder="아이디" required>
             <input type="password" id="password" name="password" placeholder="비밀번호" required>
-
             <button type="submit" class="login-btn">로그인</button>
         </div>
     </form>
@@ -60,6 +65,5 @@
         <div class="belt belt4 reverse"></div> 
         <div class="belt belt5"></div>
     </div>
-
 </body>
 </html>
