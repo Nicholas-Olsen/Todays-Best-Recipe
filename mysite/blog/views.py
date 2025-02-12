@@ -17,8 +17,8 @@ def mysql_rdb_conn():
         port=3306
     )
 
-def home_view(request):
-    return render(request,'blog/home.html')
+def index_view(request):
+    return render(request,'blog/index.html')
 
 def main_view(request):
     return render(request,'blog/main.html')
@@ -67,7 +67,7 @@ def signup(request):
                     conn.commit()
 
                     messages.success(request, "회원가입이 완료되었습니다!")
-                    return redirect('home')  # 홈 페이지로 리다이렉트
+                    return redirect('index')  # 홈 페이지로 리다이렉트
 
         except Exception as e:
             messages.error(request, f"Unexpected error: {e}")
@@ -83,12 +83,12 @@ def login(request):
         # 닉네임 입력 확인
         if not nickname:
             messages.error(request, "닉네임을 입력하세요.")
-            return redirect('home')
+            return redirect('index')
 
         # 비밀번호 입력 확인
         if not password:
             messages.error(request, "비밀번호를 입력하세요.")
-            return redirect('home')
+            return redirect('index')
 
         try:
             with mysql_rdb_conn() as conn:
@@ -99,7 +99,7 @@ def login(request):
                     curs.execute(nickname_chk, (nickname,))
                     if curs.fetchone() is None:
                         messages.error(request, "아이디가 없습니다.")
-                        return redirect('home')
+                        return redirect('index')
 
                     # 비밀번호 맞나 체크
                     password_chk = q.select_password_from_users()
@@ -111,12 +111,12 @@ def login(request):
                     # 평문 비밀번호 비교
                     if db_password is None or password != db_password:
                         messages.error(request, "비밀번호가 틀립니다.")
-                        return redirect('home')
+                        return redirect('index')
 
                     messages.success(request, "로그인이 완료되었습니다!")
                     return redirect('main')  # 로그인 성공하면 메인 페이지로
 
         except Exception as e:
             messages.error(request, f"Unexpected error: {e}")
-            return redirect('home')
-    return render(request, 'home')
+            return redirect('index')
+    return render(request, 'index')
