@@ -1,0 +1,81 @@
+        body { 
+            background-color: #f5f1ee; 
+            font-family: sans-serif; 
+            text-align: center; 
+            margin: 0; 
+        }
+
+        /* 제목부분 스타일 */
+        h1 { 
+            color: #292b6f; 
+            font-size: 2.8em; 
+            margin-top: 50px; 
+        }
+
+        .login-box { 
+            margin: 40px auto; 
+            width: 400px;  
+            padding: 20px; 
+            border: 1px solid #ccc; 
+            border-radius: 10px;
+            background-color: rgba(255, 255, 255, 0.8); /* 반투명 배경 */
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            z-index: 1;
+        }
+
+        /* 입력 필드 */
+        .login-box input { 
+            width: 100%;
+            height: 45px; 
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            box-sizing: border-box;
+        }
+
+        /* 회원가입... */
+        .signup-btn {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            background-color: #9999a8; 
+            color: white;
+            border: none;
+            padding: 12px 20px; 
+            border-radius: 18px; 
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            text-decoration: none;
+            display: inline-block;
+            transition: background-color 0.3s ease;
+        }
+
+        .signup-btn:hover {
+            background-color: #676779; 
+        }
+
+        /* 로그인 하는 부분 */
+        .login-btn {
+            margin-top: 10px; 
+            width: 100%; 
+            padding: 10px; 
+            background-color: #606a8a; 
+            color: white; 
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            text-decoration: none;
+            display: inline-block;
+            transition: background-color 0.3s ease;
+        }
+
+        .login-btn:hover {
+            background-color: darkblue;
+        }
