@@ -16,7 +16,7 @@
     <!-- 회원가입 버튼 -->
     <a href="{% url 'signup' %}" class="signup-btn">회원가입</a>
 
-    <div id="errorModal" class="modal">                 <!-- 여기서부터 -->
+    <div id="errorModal" class="modal">           
         <div class="modal-content">
             <p id="modalMessage"></p>
             <button onclick="closeModal()">확인</button>
@@ -40,7 +40,7 @@
                 {% endif %}
             {% endfor %}
         {% endif %}
-    </script>                           <!-- 여기까지 -->
+    </script>                          
     
     <h1>오늘의 레시피는?</h1>
     <form action="{% url 'login' %}" method="POST">
