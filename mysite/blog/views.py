@@ -119,7 +119,7 @@ def login(request):
                     nickname_chk = q.select_nickname_from_users()
                     curs.execute(nickname_chk, (nickname,))
                     if curs.fetchone() is None:
-                        messages.error(request, "아이디가 없습니다.")
+                        messages.error(request, "아이디가 존재하지 않습니다.")  
                         return redirect('home')
 
                     # 비밀번호 맞나 체크
