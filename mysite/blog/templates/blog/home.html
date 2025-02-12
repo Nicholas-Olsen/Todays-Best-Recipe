@@ -1,0 +1,47 @@
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>오늘의 레시피는? 시작</title>
+    <link rel="stylesheet" href="../../static/css/style.css">
+    <link rel="stylesheet" href="../../static/css/home.css">
+    <style>
+
+    </style>
+</head>
+
+<body>
+    <!-- 회원가입 버튼 -->
+    <a href="{% url 'signup' %}" class="signup-btn">회원가입</a>
+
+    {% if messages %}
+    <ul>
+        {% for message in messages %}
+            <li class="{{ message.tags }}">{{ message }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+    
+    <h1>오늘의 레시피는?</h1>
+    <form action="{% url 'login' %}" method="POST">
+        {% csrf_token %}
+        <div class="login-box">
+            <input type="text" id="nickname" name="nickname" placeholder="아이디" required>
+            <input type="password" id="password" name="password" placeholder="비밀번호" required>
+
+            <button type="submit" class="login-btn">로그인</button>
+        </div>
+    </form>
+
+    <div class="container">           
+        <div class="belt belt1"></div>
+        <div class="belt belt2 reverse"></div> 
+        <div class="belt belt3"></div>            
+        <div class="belt belt4 reverse"></div> 
+        <div class="belt belt5"></div>
+    </div>
+
+</body>
+</html>

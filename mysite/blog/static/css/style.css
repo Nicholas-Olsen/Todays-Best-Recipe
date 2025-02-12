@@ -1,0 +1,60 @@
+body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100vh;
+    justify-content: center;
+    overflow: hidden;
+    position: relative;
+}
+
+.container {
+    display: flex;
+    flex-direction: column; 
+    align-items: center;
+    gap: 30px; 
+    position: absolute; 
+    z-index: -1; 
+}
+
+/* 기본세팅 */
+.belt {
+    width: 100vw; 
+    height: 100px; 
+    opacity: 0.6; 
+    background-size: auto 100%; 
+    background-repeat: repeat-x;
+    animation: move-left 15s linear infinite;
+    animation-fill-mode: forwards; 
+}
+
+.belt1 { background-image: url("https://nicholas-olsen.github.io/Todays-Best-Recipe/images/image1.png"); }
+.belt2 { background-image: url("https://nicholas-olsen.github.io/Todays-Best-Recipe/images/image4.png"); }
+.belt3 { background-image: url("https://nicholas-olsen.github.io/Todays-Best-Recipe/images/image2.png"); }
+.belt4 { background-image: url("https://nicholas-olsen.github.io/Todays-Best-Recipe/images/image4.png"); }
+.belt5 { background-image: url("https://nicholas-olsen.github.io/Todays-Best-Recipe/images/image3.png"); }
+
+/* 짝수= 반대 방향 */
+.belt.reverse {
+    animation: move-right 15s linear infinite;
+    animation-fill-mode: forwards;
+}
+
+/* 왼쪽으로 */
+@keyframes move-left {
+    from {
+        background-position: 0 0;
+    }
+    to {
+        background-position: -200% 0; 
+    }
+}
+/* 오른쪽으로 */
+@keyframes move-right {
+    from {
+        background-position: 200% 0; 
+    }
+    to {
+        background-position: 0 0;
+    }
+}

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>오늘의레시피: 추천페이지</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="recommend.css">
+</head>
+<body>
+    <a href="main.html" class="back-button">뒤로 가기</a>
+    <h1>내가 가진 재료는?</h1>
+    <div class="recom-box">
+        <textarea id="ingredientInput" placeholder="재료를 입력하세요"></textarea><br>
+        <button class="recom-btn" onclick="validateInput()">레시피 추천</button>
+    </div>
+
+    <div class="container">
+        <div class="belt belt1"></div>
+        <div class="belt belt2 reverse"></div>
+        <div class="belt belt3"></div>
+        <div class="belt belt4 reverse"></div>
+        <div class="belt belt5"></div>
+    </div>
+
+    <!-- 경고 모달 -->
+    <div id="warningModal" class="modal">
+        <div class="modal-content">
+            <p>재료 정보가 충분하지 않습니다!</p>
+            <button onclick="closeModal()">다시 시도</button>
+        </div>
+    </div>
+
+    <script>
+        function validateInput() {
+            let inputText = document.getElementById('ingredientInput').value.trim();
+            if (inputText.length <= 5) {
+                document.getElementById('warningModal').style.display = 'block';
+            } else {
+                window.location.href = 'result.html'; 
+            }
+        }
+        function closeModal() {
+            document.getElementById('warningModal').style.display = 'none';
+        }
+    </script>
+</body>
+</html>
