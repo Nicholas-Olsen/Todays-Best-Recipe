@@ -153,22 +153,22 @@ GPT_API_KEY = "sk-proj-UeiyMcAlaXoXhtpNFPpxkJiwJOXqLXHBmdy9raG5qbXOAWMQ83AT92Hxq
 
 def get_gpt_response(request):
     gpt_response = None  
-    ingredientInput = ""
+    ingredient_input = ""  # Changed from ingredientInput
 
     if request.method == "POST":
-        ingredientInput = request.POST.get("ingredientInput", "").strip()  
+        ingredient_input = request.POST.get("ingredientInput", "").strip()  # Changed variable to ingredient_input
 
         prompt = f"""
         사용자가 입력한 재료를 바탕으로 가장 적절한 요리 종류(한식, 중식, 일식, 양식 등)를 결정하고, 그에 맞는 요리를 추천해줘.
         그리고 추천된 요리의 레시피를 단계별로 설명해줘.
 
-        입력된 재료: {ingredientInput}
+        입력된 재료: {ingredient_input}
 
         출력 형식(JSON):
         {{
-            "요리 종류": "한식",
-            "추천 요리 이름": "된장찌개",
-            "레시피": [
+            "cuisine_type": "한식",  
+            "recommended_recipe_name": "된장찌개",  
+            "recipe_steps": [  
                 "두부와 애호박을 적당한 크기로 썬다.",
                 "멸치 육수를 끓인 후 된장을 풀어 넣는다.",
                 "준비한 재료를 넣고 보글보글 끓여 완성한다."
@@ -176,7 +176,7 @@ def get_gpt_response(request):
         }}
         """
 
-        if ingredientInput:  
+        if ingredient_input:  
             headers = {
                 "Authorization": f"Bearer {GPT_API_KEY}",
                 "Content-Type": "application/json",
@@ -190,7 +190,6 @@ def get_gpt_response(request):
             response = requests.post(GPT_API_URL, headers=headers, json=data)
             response.raise_for_status()  
 
-            # ✅ 응답을 JSON 형태로 변환
             gpt_response_text = response.json()["choices"][0]["message"]["content"].strip()
             try:
                 gpt_response = json.loads(gpt_response_text)  # JSON 변환
@@ -198,6 +197,6 @@ def get_gpt_response(request):
                 gpt_response = {"error": "올바른 형식의 데이터를 반환받지 못했습니다."}
 
     return render(request, "blog/result.html", {
-        "ingredientInput": ingredientInput,
+        "ingredient_input": ingredient_input,  # Changed from ingredientInput
         "gpt_response": gpt_response
     })
