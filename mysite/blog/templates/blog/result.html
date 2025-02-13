@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>오늘의레시피: 추천결과</title>
-        <link rel="stylesheet" href="../static/css/result.css">
-        <link rel="stylesheet" href="../../static/css/style.css">
+    <link rel="stylesheet" href="../static/css/result.css">
+    <link rel="stylesheet" href="../../static/css/style.css">
 </head>
 <body>
     <a href="{% url 'recommend' %}" class="again-button">다시 입력</a>
@@ -14,28 +14,28 @@
     <form action="{% url 'home' %}" method="POST">
         {% csrf_token %}
         <div class="recom-box">
-            {% if gpt_response and gpt_response.요리 종류 %}
+            {% if gpt_response and gpt_response.cuisine_type %}  
                 <div class="recipe-container">
                     <h2>오늘의 추천 레시피</h2>
                 
                     <div class="ingredient-section">
                         <label>입력된 재료:</label>
-                        <p class="ingredient">{{ ingredientInput }}</p>
+                        <p class="ingredient">{{ ingredient_input }}</p>  
                     </div>
                     <div class="category-section">
                         <label>추천 요리 종류:</label>
-                        <p class="category">{{ gpt_response.요리 종류 }}</p>
+                        <p class="category">{{ gpt_response.cuisine_type }}</p>  
                     </div>
 
                     <div class="recipe-section">
                         <label>추천 요리:</label>
-                        <p class="recipe-name">{{ gpt_response.추천 요리 이름 }}</p>
+                        <p class="recipe-name">{{ gpt_response.recommended_recipe_name }}</p>  
                     </div>
 
                     <div class="steps-section">
                         <label>레시피 단계:</label>
                         <ol class="recipe-steps">
-                            {% for step in gpt_response.레시피 %}
+                            {% for step in gpt_response.recipe_steps %}  
                                 <li>{{ step }}</li>
                             {% endfor %}
                         </ol>
@@ -54,7 +54,6 @@
     <div class="belt belt3"></div>
     <div class="belt belt4 reverse"></div> 
     <div class="belt belt5"></div>
-        
 </div>
 </body>
 </html>
