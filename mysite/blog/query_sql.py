@@ -47,7 +47,7 @@ select rec_id from recipes where rec_name = %s;
 
 
 
-#recipes 테이블 관련
+#recipes 테이블 관련 - 카테고리별
 def select_foodname_by_type(): # 음식의 카테고리별로 음식 이름 조회
     sql=""" 
     SELECT rec_name from recipes where rec_type = %s
@@ -60,17 +60,37 @@ def select_descrip_by_type(): # 음식의 카테고리별로 음식 설명 조�
     """
     return sql
 
-def select_detail_by_type(): # 음식의 카테고리별로 음식 레시피(조리법) 조회회
-    sql=""" 
-    SELECT rec_detail from recipes where rec_type = %s
-    """
-    return sql
-
 def select_ing_by_type(): # 음식의 카테고리별로 음식 사진 조회
     sql=""" 
     SELECT rec_img from recipes where rec_type = %s
     """
     return sql
+
+
+
+#recipes 테이블 관련 - 음식이름으로
+def select_foodtype_by_name(): # 음식의 이름별로 음식 카테고리리
+    sql=""" 
+    SELECT rec_type from recipes where rec_name = %s
+    """
+    return sql
+
+def select_descrip_by_name(): # 음식의 이름별로 음식 설명 조회 
+    sql=""" 
+    SELECT rec_descrip from recipes where rec_name = %s
+    """
+    return sql
+
+
+def select_img_by_name(): # 음식의 이름별로 음식 사진 조회
+    sql=""" 
+    SELECT rec_img from recipes where rec_name = %s
+    """
+    return sql
+
+
+
+
 
 
 
