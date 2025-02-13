@@ -12,7 +12,7 @@
     
     <h1>오늘의 레시피 추천</h1>
     <form action="{% url 'home' %}" method="POST">
-        {% csrf_token %}                                                                                     <!-- 토큰 추가-->
+        {% csrf_token %}                                                  
         <div class="recom-box">
             {% if gpt_response %}
                 <h2>GPT 응답:</h2>
