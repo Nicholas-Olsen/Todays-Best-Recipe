@@ -12,14 +12,40 @@
     
     <h1>오늘의 레시피 추천</h1>
     <form action="{% url 'home' %}" method="POST">
-        {% csrf_token %}                                                  
+        {% csrf_token %}
         <div class="recom-box">
-            {% if gpt_response %}
-                <h2>GPT 응답:</h2>
-                <p>{{ gpt_response }}</p>
+            {% if gpt_response and gpt_response.요리 종류 %}
+                <div class="recipe-container">
+                    <h2>오늘의 추천 레시피</h2>
+                
+                    <div class="ingredient-section">
+                        <label>입력된 재료:</label>
+                        <p class="ingredient">{{ ingredientInput }}</p>
+                    </div>
+                    <div class="category-section">
+                        <label>추천 요리 종류:</label>
+                        <p class="category">{{ gpt_response.요리 종류 }}</p>
+                    </div>
+
+                    <div class="recipe-section">
+                        <label>추천 요리:</label>
+                        <p class="recipe-name">{{ gpt_response.추천 요리 이름 }}</p>
+                    </div>
+
+                    <div class="steps-section">
+                        <label>레시피 단계:</label>
+                        <ol class="recipe-steps">
+                            {% for step in gpt_response.레시피 %}
+                                <li>{{ step }}</li>
+                            {% endfor %}
+                        </ol>
+                    </div>
+                </div>
+            {% else %}
+                <p class="error-message">추천 결과를 가져오는 데 실패했습니다.</p>
             {% endif %}
             <textarea placeholder="레시피 이름"></textarea><br>
-            <button type="submit" class="finish-btn" >페이지 종료</button>
+            <button type="submit" class="finish-btn">페이지 종료</button>
         </div>
     </form>
     <div class="container">
