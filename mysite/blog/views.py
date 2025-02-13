@@ -148,7 +148,7 @@ def login(request):
 # GPT 연동
 
 GPT_API_URL = "https://api.openai.com/v1/chat/completions"
-GPT_API_KEY = "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"  # 실제 API 키로 교체하세요
+GPT_API_KEY = ""
 
 def get_gpt_response(request):
     if request.method == 'POST':
@@ -166,11 +166,7 @@ def get_gpt_response(request):
     {{
         "dish_type": "[한식, 중식, 일식, 양식 중 하나]",
         "dish_name": "[요리 이름]",
-        "recipe_steps": [
-            "[단계 1]",
-            "[단계 2]",
-            "[단계 3]"
-        ]
+        "recipe_steps": "[단계별로 출력]"
     }}
     """
 
