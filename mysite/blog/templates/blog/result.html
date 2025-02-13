@@ -9,7 +9,7 @@
 </head>
 <body>
     <a href="{% url 'recommend' %}" class="again-button">다시 입력</a>
-    
+
     <h1>오늘의 레시피 추천</h1>
     <form action="{% url 'home' %}" method="POST">
         {% csrf_token %}
@@ -20,20 +20,25 @@
                 <h3>레시피 단계</h3>
                 <ol>
                     {% for step in recipe_steps %}
-                        <li>{{ step }}</li>
+                        <li style="list-style:none;">{{ step }}</li>
                     {% endfor %}
                 </ol>
+            {% else %}
+                <p class="error-message">추천 결과를 가져오는 데 실패했습니다.</p>
             {% endif %}
-            <textarea placeholder="레시피 이름"></textarea><br>
+
             <button type="submit" class="finish-btn">페이지 종료</button>
         </div>
     </form>
     <div class="container">
-        <div class="belt belt1"></div>
-        <div class="belt belt2 reverse"></div>
-        <div class="belt belt3"></div>
-        <div class="belt belt4 reverse"></div>
-        <div class="belt belt5"></div>
-    </div>
+    <div class="belt belt1"></div>
+    <div class="belt belt2 reverse"></div>
+    <div class="belt belt3"></div>
+    <div class="belt belt4 reverse"></div>
+    <div class="belt belt5"></div>
+
+</div>
 </body>
+
+
 </html>
