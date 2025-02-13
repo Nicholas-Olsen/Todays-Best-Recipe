@@ -30,6 +30,20 @@ def select_password_from_users():
     return sql
 
 
+def rec_descrip_from_steps():
+    sql="""
+select step_description from recipe_steps where rec_id = %s;
+"""
+    return sql
+    
+def rec_name_to_rec_id():
+    sql="""
+select rec_id from recipes where rec_name = %s;
+""" 
+    return sql
+
+
+
 
 
 
