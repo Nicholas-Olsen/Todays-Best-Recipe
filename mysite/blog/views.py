@@ -150,53 +150,57 @@ def login(request):
 GPT_API_URL = "https://api.openai.com/v1/chat/completions"
 GPT_API_KEY = "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"  # 실제 API 키로 교체하세요
 
-
 def get_gpt_response(request):
-    gpt_response = None  
-    ingredient_input = ""  # Changed from ingredientInput
+    if request.method == 'POST':
+        ingredientInput = request.POST['ingredientInput']
+
+    gpt_response = None  # 기본값 설정
+
+    prompt = f"""
+    사용자가 입력한 재료를 바탕으로 가장 적절한 요리 종류(한식, 중식, 일식, 양식 등)를 결정하고, 그에 맞는 요리를 추천해줘.
+    그리고 추천된 요리의 레시피를 단계별로 설명해줘.
+
+    입력된 재료: {ingredientInput}
+
+    출력 형식:
+    {{
+        "dish_type": "[한식, 중식, 일식, 양식 중 하나]",
+        "dish_name": "[요리 이름]",
+        "recipe_steps": [
+            "[단계 1]",
+            "[단계 2]",
+            "[단계 3]"
+        ]
+    }}
+    """
 
     if request.method == "POST":
-        ingredient_input = request.POST.get("ingredientInput", "").strip()  # Changed variable to ingredient_input
+        headers = {
+            "Authorization": f"Bearer {GPT_API_KEY}",
+            "Content-Type": "application/json",
+        }
+        data = {
+            "model": "gpt-3.5-turbo",
+            "messages": [{"role": "user", "content": prompt}],
+            "max_tokens": 1000,
+        }
 
-        prompt = f"""
-        사용자가 입력한 재료를 바탕으로 가장 적절한 요리 종류(한식, 중식, 일식, 양식 등)를 결정하고, 그에 맞는 요리를 추천해줘.
-        그리고 추천된 요리의 레시피를 단계별로 설명해줘.
+        response = requests.post(GPT_API_URL, headers=headers, json=data)
+        response.raise_for_status()  # 오류 발생 시 예외 발생
 
-        입력된 재료: {ingredient_input}
+        gpt_response = response.json()["choices"][0]["message"]["content"].strip()
 
-        출력 형식(JSON):
-        {{
-            "cuisine_type": "한식",  
-            "recommended_recipe_name": "된장찌개",  
-            "recipe_steps": [  
-                "두부와 애호박을 적당한 크기로 썬다.",
-                "멸치 육수를 끓인 후 된장을 풀어 넣는다.",
-                "준비한 재료를 넣고 보글보글 끓여 완성한다."
-            ]
-        }}
-        """
-
-        if ingredient_input:  
-            headers = {
-                "Authorization": f"Bearer {GPT_API_KEY}",
-                "Content-Type": "application/json",
-            }
-            data = {
-                "model": "gpt-3.5-turbo",
-                "messages": [{"role": "user", "content": prompt}],
-                "max_tokens": 1000,
-            }
-
-            response = requests.post(GPT_API_URL, headers=headers, json=data)
-            response.raise_for_status()  
-
-            gpt_response_text = response.json()["choices"][0]["message"]["content"].strip()
-            try:
-                gpt_response = json.loads(gpt_response_text)  # JSON 변환
-            except json.JSONDecodeError:
-                gpt_response = {"error": "올바른 형식의 데이터를 반환받지 못했습니다."}
+        # 응답을 JSON 형식으로 파싱
+        try:
+            parsed_response = json.loads(gpt_response)
+            dish_type = parsed_response.get("dish_type", "")
+            dish_name = parsed_response.get("dish_name", "")
+            recipe_steps = parsed_response.get("recipe_steps", [])
+        except json.JSONDecodeError:
+            dish_type = dish_name = recipe_steps = []
 
     return render(request, "blog/result.html", {
-        "ingredient_input": ingredient_input,  # Changed from ingredientInput
-        "gpt_response": gpt_response
+        "dish_type": dish_type,
+        "dish_name": dish_name,
+        "recipe_steps": recipe_steps
     })
