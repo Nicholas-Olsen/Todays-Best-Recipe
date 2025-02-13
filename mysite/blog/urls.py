@@ -1,6 +1,7 @@
 from django.urls import path
 from blog.views import home_view, main_view, signup_view, koreanfood, korean_food_list, signup, login,de_food,ko_food,ja_food,ch_food,we_food
-from blog.views import recommend, result
+from blog.views import recommend, result, get_gpt_response
+from blog.views import get_gpt_response
 urlpatterns = [
     path('',home_view ,name='home'),
     path('main/',main_view, name='main'),
@@ -8,6 +9,8 @@ urlpatterns = [
     path('signup/',signup_view, name='signup'),
     path('login/',login, name='login'),
     path('result/',result, name='result'),
+
+    path('get_gpt_response/', get_gpt_response, name='get_gpt_response'),
 
     path('koreanfood/',koreanfood, name='koreanfood'),
     path('korean-food/', korean_food_list, name='korean_food_list'),
@@ -19,4 +22,6 @@ urlpatterns = [
     path('ch_food',ch_food ,name='ch_food'),
     path('we_food',we_food ,name='we_food'),
     path('de_food',de_food ,name='de_food'),
+
+    path('chat/', get_gpt_response, name='chat_gpt'),
 ]

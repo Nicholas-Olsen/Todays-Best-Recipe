@@ -8,40 +8,38 @@
     <link rel="stylesheet" href="/static/css/recommend.css">  <!-- css 경로 추가 -->
 </head>
 <body>
-    <a href="main.html" class="back-button">뒤로 가기</a>
-    <h1>내가 가진 재료는?</h1>
-    <div class="recom-box">
-        <textarea id="ingredientInput" placeholder="재료를 입력하세요"></textarea><br>
-        <button class="recom-btn" onclick="validateInput()">레시피 추천</button>
-    </div>
-
-    <div class="container">
-        <div class="belt belt1"></div>
-        <div class="belt belt2 reverse"></div>
-        <div class="belt belt3"></div>
-        <div class="belt belt4 reverse"></div>
-        <div class="belt belt5"></div>
-    </div>
-
-    <div id="warningModal" class="modal">
-        <div class="modal-content">
-            <p>재료 정보가 충분하지 않습니다!</p>  <!-- 문구 수정 -->
-            <button onclick="closeModal()">다시 시도</button>
+    <form action="{% url 'get_gpt_response' %}" method="POST">
+        {% csrf_token %}
+        <a href="main.html" class="back-button">뒤로 가기</a>
+        <h1>내가 가진 재료는?</h1>
+        <div class="recom-box">
+            <textarea name="ingredientInput" id="ingredientInput" placeholder="재료를 입력하세요"></textarea><br>
+            <button type="submit" class="recom-btn">레시피 추천</button>
         </div>
-    </div>
 
+        <div class="container">
+            <div class="belt belt1"></div>
+            <div class="belt belt2 reverse"></div>
+            <div class="belt belt3"></div>
+            <div class="belt belt4 reverse"></div>
+            <div class="belt belt5"></div>
+        </div>
+
+        <div id="warningModal" class="modal">
+            <div class="modal-content">
+                <p>재료 정보가 충분하지 않습니다!</p>  <!-- 문구 수정 -->
+                <button onclick="closeModal()">다시 시도</button>
+            </div>
+        </div>
+    </form>
     <script>
-        function validateInput() {
-            let inputText = document.getElementById('ingredientInput').value.trim();
-            if (inputText.length <= 5) {
-                document.getElementById('warningModal').style.display = 'block';
-            } else {
-                window.location.replace("{% url 'result' %}"); 
-            }
-        }
-        function closeModal() {
-            document.getElementById('warningModal').style.display = 'none';
-        }
+        // function validateInput() {
+        //         window.location.replace("{% url 'result' %}");
+        //
+        // }
+        // function closeModal() {
+        //     document.getElementById('warningModal').style.display = 'none';
+        // }
     </script>
 </body>
 </html>

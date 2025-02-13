@@ -14,6 +14,10 @@
     <form action="{% url 'home' %}" method="POST">
         {% csrf_token %}                                                                                     <!-- 토큰 추가-->
         <div class="recom-box">
+            {% if gpt_response %}
+                <h2>GPT 응답:</h2>
+                <p>{{ gpt_response }}</p>
+            {% endif %}
             <textarea placeholder="레시피 이름"></textarea><br>
             <button type="submit" class="finish-btn" >페이지 종료</button>
         </div>

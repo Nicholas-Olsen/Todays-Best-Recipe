@@ -2,9 +2,9 @@ from django.shortcuts import render
 from django.shortcuts import render, redirect
 from django.contrib import messages
 import pymysql
-from flask_wtf.csrf import CSRFProtect
 from blog import query_sql as q
 from .models import Recipe
+import requests
 from django.contrib.auth.hashers import check_password
 
 # DB 연결 함수
@@ -53,6 +53,8 @@ def recommend(request):
 
 def result(request):
     return render(request,'blog/result.html')
+
+
 
 def signup(request):
     if request.method == 'POST':
@@ -141,3 +143,51 @@ def login(request):
             messages.error(request, f"Unexpected error: {e}")
             return redirect('home')
     return render(request, 'home')
+
+# GPT 연동
+
+GPT_API_URL = "https://api.openai.com/v1/chat/completions"
+GPT_API_KEY = "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"  # 실제 API 키로 교체하세요
+
+
+def get_gpt_response(request):
+    if request.method == 'POST':
+        ingredientInput = request.POST['ingredientInput']
+
+    gpt_response = None  # 기본값 설정
+
+    prompt = f"""
+    사용자가 입력한 재료를 바탕으로 가장 적절한 요리 종류(한식, 중식, 일식, 양식 등)를 결정하고, 그에 맞는 요리를 추천해줘.
+    그리고 추천된 요리의 레시피를 단계별로 설명해줘.
+
+    입력된 재료: {ingredientInput}
+
+    출력 형식:
+    - 요리 종류: [한식, 중식, 일식, 양식 중 하나]
+    - 추천 요리 이름: [요리 이름]
+    - 레시피:
+      1. [단계 1]
+      2. [단계 2]
+      3. [단계 3]
+    """
+
+    if request.method == "POST":
+        # prompt = request.POST.get("user_prompt", "")
+
+        if prompt:
+            headers = {
+                "Authorization": f"Bearer {GPT_API_KEY}",
+                "Content-Type": "application/json",
+            }
+            data = {
+                "model": "gpt-3.5-turbo",
+                "messages": [{"role": "user", "content": prompt}],
+                "max_tokens": 1000,
+            }
+
+            response = requests.post(GPT_API_URL, headers=headers, json=data)
+            response.raise_for_status()  # 오류 발생 시 예외 발생
+
+            gpt_response = response.json()["choices"][0]["message"]["content"].strip()
+
+    return render(request, "blog/result.html", {"gpt_response": gpt_response})
