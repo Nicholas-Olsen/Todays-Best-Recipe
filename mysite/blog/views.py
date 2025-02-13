@@ -6,6 +6,7 @@ from blog import query_sql as q
 from .models import Recipe
 import requests
 import json 
+import re
 from django.contrib.auth.hashers import check_password
 
 # DB 연결 함수
@@ -155,21 +156,25 @@ def get_gpt_response(request):
         ingredientInput = request.POST['ingredientInput']
 
     gpt_response = None  # 기본값 설정
-
+    
     prompt = f"""
     사용자가 입력한 재료를 바탕으로 가장 적절한 요리 종류(한식, 중식, 일식, 양식 등)를 결정하고, 그에 맞는 요리를 추천해줘.
-    그리고 추천된 요리의 레시피를 단계별로 설명해줘.
-
+    그리고 추천된 요리의 레시피를 단계별로 출력해줘. 단계 수는 재료와 요리에 따라 달라질 수 있어.
+    
     입력된 재료: {ingredientInput}
-
+    
     출력 형식:
     {{
         "dish_type": "[한식, 중식, 일식, 양식 중 하나]",
         "dish_name": "[요리 이름]",
-        "recipe_steps": "[단계별로 출력]"
+        "recipe_steps": [
+            "1. 첫번째 단계",
+            "2. 두번째 단계",
+            "3. 세번째 단계",
+            ...
+        ]
     }}
     """
-
     if request.method == "POST":
         headers = {
             "Authorization": f"Bearer {GPT_API_KEY}",
@@ -192,6 +197,9 @@ def get_gpt_response(request):
             dish_type = parsed_response.get("dish_type", "")
             dish_name = parsed_response.get("dish_name", "")
             recipe_steps = parsed_response.get("recipe_steps", [])
+            
+            # 숫자 글머리 제거
+            recipe_steps = [re.sub(r'^\d+\.\s*', '', step) for step in recipe_steps]
         except json.JSONDecodeError:
             dish_type = dish_name = recipe_steps = []
 
