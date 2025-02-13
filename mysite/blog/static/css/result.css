@@ -10,8 +10,16 @@ h1 {
     margin-top: -50px; 
 }
 
+form {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
 /* 결과 박스 스타일 */
-.recom-box {
+.result-box {
     border: 1px solid #ccc;
     border-radius: 10px;
     background-color: rgba(255, 255, 255, 0.9);
@@ -20,16 +28,32 @@ h1 {
     flex-direction: column;
     align-items: center;
     padding: 20px;
-    width: 50%;
-    margin: 20px auto;
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+    z-index: 1;
 }
 
 /* GPT 결과 제목 */
-.recom-box h2 {
-    color: #2a3478;
-    font-size: 1.8em;
-    margin-bottom: 15px;
+.result-box h2, .result-box h3 {
+    color: #6D7485;
     font-weight: bold;
+    text-align: left;
+    margin-bottom: 15px;
+}
+
+.result-box h2 {
+    font-size: 1.8em;
+}
+
+.result-box h3 {
+    font-size: 1.5em;
+}
+
+.bullet {
+    color: #5A8CC1;
+    font-weight: bold;
+    margin-right: 8px;
 }
 
 /* 입력된 재료 영역 */
@@ -72,6 +96,7 @@ h1 {
     font-size: 1em;
     width: 100%;
     text-align: left;
+    margin-left: 20px; /* 왼쪽 여백을 추가 */
 }
 
 /* 다시 입력 */
@@ -125,4 +150,15 @@ h1 {
 
 .finish-btn:hover {
     background-color: darkblue;
+}
+
+/* 응답 내용 스타일 */
+.response-text {
+    color: #424242;
+    font-weight: bold;
+}
+
+/* 텍스트 스타일 */
+li {
+    color: #424242;
 }
