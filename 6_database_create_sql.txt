@@ -58,7 +58,10 @@ VALUES
 (17, '마라탕', '매콤한 중국식 국물 요리', '다양한 재료를 마라 소스에 끓인다.', 'https://nicholas-olsen.github.io/Todays-Best-Recipe/mysite/blog/static/food_picture/중식/chinafood17.jpg', '중식'),
 (18, '훠궈', '다양한 재료를 넣어 끓이는 중국식 전골', '육수에 고기와 채소를 넣어 끓인다.', 'https://nicholas-olsen.github.io/Todays-Best-Recipe/mysite/blog/static/food_picture/중식/chinafood18.jpg', '중식'),
 (19, '건두부볶음', '고소한 맛의 두부 볶음 요리', '건두부를 채소와 함께 볶는다.', 'https://nicholas-olsen.github.io/Todays-Best-Recipe/mysite/blog/static/food_picture/중식/chinafood19.jpg', '중식'),
-(20, '북경오리', '겉은 바삭하고 속은 부드러운 오리 요리', '오리를 통째로 구워낸다.', 'https://nicholas-olsen.github.io/Todays-Best-Recipe/mysite/blog/static/food_picture/중식/chinafood20.jpg', '중식'),
+(20, '북경오리', '겉은 바삭하고 속은 부드러운 오리 요리', '오리를 통째로 구워낸다.', 'https://nicholas-olsen.github.io/Todays-Best-Recipe/mysite/blog/static/food_picture/중식/chinafood20.jpg', '중식');
+
+INSERT INTO recipes (rec_id, rec_name, rec_descrip, rec_detail, rec_img, rec_type)
+VALUES
 (21, '초코 브라우니', '진한 초콜릿 맛이 특징인 브라우니', '초콜릿과 버터를 섞어 구운 후 오븐에서 굽는다.', 'https://nicholas-olsen.github.io/Todays-Best-Recipe/mysite/blog/static/food_picture/디저트/dessert1.jpg', '디저트'),
 (22, '초코칩 쿠키', '초콜릿 칩이 듬뿍 들어간 쿠키', '밀가루, 설탕, 버터, 초콜릿 칩을 섞어 구운다.', 'https://nicholas-olsen.github.io/Todays-Best-Recipe/mysite/blog/static/food_picture/디저트/dessert2.jpg', '디저트'),
 (23, '단호박 푸딩', '부드럽고 달콤한 단호박 푸딩', '단호박을 삶아 푸딩 믹스와 섞어 만든다.', 'https://nicholas-olsen.github.io/Todays-Best-Recipe/mysite/blog/static/food_picture/디저트/dessert3.jpg', '디저트'),
@@ -88,7 +91,10 @@ VALUES
 (47, '나고미', '일본식 디저트', '전통적인 일본 디저트 재료를 사용해 만든다.', 'https://nicholas-olsen.github.io/Todays-Best-Recipe/mysite/blog/static/food_picture/일식/japanesefood17.jpg', '일식'),
 (48, '유부초밥', '유부 속에 밥을 채운 초밥', '유부에 초밥 밥을 채워 만든다.', 'https://nicholas-olsen.github.io/Todays-Best-Recipe/mysite/blog/static/food_picture/일식/japanesefood18.jpg', '일식'),
 (49, '텐동', '튀김 덮밥', '튀김을 밥 위에 올려 간장 소스를 뿌려 먹는다.', 'https://nicholas-olsen.github.io/Todays-Best-Recipe/mysite/blog/static/food_picture/일식/japanesefood19.jpg', '일식'),
-(50, '시오라멘', '소금 베이스 국물 라멘', '소금 국물에 면을 넣어 만든 라멘', 'https://nicholas-olsen.github.io/Todays-Best-Recipe/mysite/blog/static/food_picture/일식/japanesefood20.jpg', '일식'),
+(50, '시오라멘', '소금 베이스 국물 라멘', '소금 국물에 면을 넣어 만든 라멘', 'https://nicholas-olsen.github.io/Todays-Best-Recipe/mysite/blog/static/food_picture/일식/japanesefood20.jpg', '일식');
+
+INSERT INTO recipes (rec_id, rec_name, rec_descrip, rec_detail, rec_img, rec_type)
+VALUES
 (51, '김치찌개', '발효된 김치로 끓인 매운 찌개', '익은 김치와 돼지고기, 두부 등을 넣고 끓여 만든 매운 찌개.', 'https://nicholas-olsen.github.io/Todays-Best-Recipe/mysite/blog/static/food_picture/한식/koreanfood1.jpg', '한식'),
 (52, '된장찌개', '된장을 풀어 끓인 국물 요리', '된장과 채소, 두부 등을 넣어 끓여 만든 찌개.', 'https://nicholas-olsen.github.io/Todays-Best-Recipe/mysite/blog/static/food_picture/한식/koreanfood2.jpg', '한식'),
 (53, '부대찌개', '소시지와 햄을 넣은 찌개', '소시지와 햄, 김치, 두부 등을 넣고 끓인 찌개.', 'https://nicholas-olsen.github.io/Todays-Best-Recipe/mysite/blog/static/food_picture/한식/koreanfood3.jpg', '한식'),
@@ -107,7 +113,10 @@ VALUES
 (66, '낙지볶음', '매운 양념으로 볶은 낙지', '낙지를 고추장과 양념에 볶은 매운 요리.', 'https://nicholas-olsen.github.io/Todays-Best-Recipe/mysite/blog/static/food_picture/한식/koreanfood16.jpg', '한식'),
 (67, '보쌈', '삶은 돼지고기를 쌈으로 먹는 요리', '삶은 돼지고기를 채소와 함께 쌈으로 먹는 요리.', 'https://nicholas-olsen.github.io/Todays-Best-Recipe/mysite/blog/static/food_picture/한식/koreanfood17.jpg', '한식'),
 (68, '갈비탕', '소갈비로 끓인 맑은 국물 요리', '소갈비와 무를 넣고 끓인 맑은 국물 요리.', 'https://nicholas-olsen.github.io/Todays-Best-Recipe/mysite/blog/static/food_picture/한식/koreanfood18.jpg', '한식'),
-(69, '떡볶이', '떡과 어묵을 고추장 양념에 볶은 간식', '떡과 어묵을 고추장 양념에 볶아 만든 매운 간식.', 'https://nicholas-olsen.github.io/Todays-Best-Recipe/mysite/blog/static/food_picture/한식/koreanfood19.jpg', '한식'),,
+(69, '떡볶이', '떡과 어묵을 고추장 양념에 볶은 간식', '떡과 어묵을 고추장 양념에 볶아 만든 매운 간식.', 'https://nicholas-olsen.github.io/Todays-Best-Recipe/mysite/blog/static/food_picture/한식/koreanfood19.jpg', '한식');
+
+INSERT INTO recipes (rec_id, rec_name, rec_descrip, rec_detail, rec_img, rec_type)
+VALUES
 (70, '스테이크', '굽거나 볶아서 조리한 고기 요리', '소고기 또는 다른 고기를 구워서 만든 요리.', 'https://nicholas-olsen.github.io/Todays-Best-Recipe/mysite/blog/static/food_picture/양식/food1.jpg', '양식'),
 (71, '크림파스타', '크림 소스를 얹은 파스타', '크림 소스와 함께 볶은 파스타 요리.', 'https://nicholas-olsen.github.io/Todays-Best-Recipe/mysite/blog/static/food_picture/양식/food2.jpg', '양식'),
 (72, '토마토파스타', '토마토 소스의 파스타', '신선한 토마토 소스를 사용한 파스타 요리.', 'https://nicholas-olsen.github.io/Todays-Best-Recipe/mysite/blog/static/food_picture/양식/food3.jpg', '양식'),
