@@ -8,21 +8,27 @@ h1 {
     margin-top: 50px; 
 }
 
-.login-box { 
-    margin: 40px auto; 
-    width: 400px;  
-    padding: 20px; 
-    border: 1px solid #ccc; 
+/* 입력 필드 */
+.login-box {
+    margin: 40px auto;
+    width: 400px;
+    padding: 20px;
+    border: 1px solid #ccc;
     border-radius: 10px;
-    background-color: rgba(255, 255, 255, 0.8); /* 반투명 배경 */
+    background-color: rgba(255, 255, 255, 0.8);
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
     display: flex;
     flex-direction: column;
     align-items: center;
     z-index: 1;
 }
-
-/* 입력 필드 */
+.input-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+/* 입력 */
 .login-box input { 
     width: 100%;
     height: 45px; 
@@ -30,15 +36,24 @@ h1 {
     font-size: 16px;
     border: 1px solid #ccc;
     border-radius: 5px;
-    margin-bottom: 20px;
+    margin-bottom: 15px;
     box-sizing: border-box;
     font-family: 'Galmuri9', sans-serif; 
-    font-size: 14px;
+    font-size: 16px;
     font-weight: normal;
+    background-color: #fbfbfb;
 }
 
+.button-container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 12px; /* 버튼 간격 */
+    margin-top: 10px;
+}
 .login-box input:focus {
     color: #2E343E;
+    background-color: #eef0f9
 }
     
 .input-group {
@@ -49,7 +64,7 @@ h1 {
 }
 .input-group input::placeholder {
     font-family: 'Galmuri9', sans-serif;
-    font-size: 14px;
+    font-size: 15px;
     color: #a4a6ab; 
     font-weight: normal;
 }
@@ -63,9 +78,9 @@ h1 {
     color: white;
     border: none;
     padding: 12px 20px; 
-    border-radius: 18px; 
+    border-radius: 20px; 
     cursor: pointer;
-    font-size: 19px;
+    font-size: 16px;
     font-family: 'RoundMo', sans-serif;
     font-weight: 400;
     text-decoration: none;
@@ -81,16 +96,16 @@ h1 {
 .login-btn {
     margin-top: 10px; 
     width: 100%; 
-    padding: 10px; 
-    background-color: #606a8a; 
-    color: white; 
+    padding: 12px;
+    background-color: #606a8a;
+    color: white;
     border-radius: 10px;
     cursor: pointer;
     font-size: 16px;
     font-family: 'RoundMo', sans-serif;
     font-weight: bold;
     text-decoration: none;
-    display: inline-block;
+    text-align: center;
     transition: background-color 0.3s ease;
 }
 
@@ -98,7 +113,30 @@ h1 {
     background-color: darkblue;
 }
 
-.modal {                            /*-- 모달 창 스타일 */
+/* 게스트 로그인 */
+.guest-btn {
+    margin-top: 10px; 
+    width: 100%; 
+    padding: 10px;
+    background-color: #979dbf;
+    color: white;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 16px;
+    font-family: 'RoundMo', sans-serif;
+    font-weight: bold;
+    text-decoration: none;
+    text-align: center;
+    transition: background-color 0.3s ease;
+}
+
+
+.guest-btn:hover {
+    background-color: #4d5ab3;
+}
+
+/*-- 모달 창 스타일 */
+.modal {                            
     display: none;
     position: fixed;
     z-index: 1000;
