@@ -92,6 +92,15 @@ def select_img_by_name(): # 음식의 이름별로 음식 사진 조회
 
 
 
+#recipe_steps 테이블
+def select_steps_from_recipe_steps():
+    sql="""
+    SELECT step_number, step_description from recipe_steps WHERE rec_id = %s
+"""
+    return sql
+
+
+
 
 
 
