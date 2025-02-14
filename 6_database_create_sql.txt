@@ -34,7 +34,8 @@ CREATE TABLE recipe_steps (
 
 INSERT INTO recipes (rec_id, rec_name, rec_descrip, rec_detail, rec_img, rec_type)
 VALUES
-(1, '짜장면', '고소하고 짭조름한 중식 면 요리', '면을 삶은 후 춘장 소스를 버무린다.', 'https://github.com/Nicholas-Olsen/Todays-Best-Recipe/blob/main/mysite/blog/static/food_picture/%EC%A4%91%EC%8B%9D/chinafood1.jpg', '중식'),
+(1, '짜장면', '고소하고 짭조름한 중식 면 요리', '면을 삶은 후 춘장 소스를 버무린다.', 'https://nicholas-olsen.github.io/Todays-Best-Recipe/mysite/blog/static/food_picture/중식
+/chinafood1.jpg', '중식'),
 (2, '짬뽕', '매콤한 국물과 해산물이 특징인 중식 요리', '홍합, 오징어 등을 볶아 육수에 더한 후 면을 넣는다.', 'D:\\6jo_project\\static\\images\\recipes\\china\\chinafood2.jpg', '중식'),
 (3, '탕수육', '바삭하고 달콤한 소스가 특징인 튀김 요리', '돼지고기를 튀긴 후 새콤달콤한 소스를 뿌린다.', 'D:\\6jo_project\\static\\images\\recipes\\china\\chinafood3.jpg', '중식'),
 (4, '유린기', '새콤달콤한 소스가 특징인 치킨 요리', '튀긴 닭 위에 소스를 뿌려 낸다.', 'D:\\6jo_project\\static\\images\\recipes\\china\\chinafood4.jpg', '중식'),
