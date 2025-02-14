@@ -5,12 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>오늘의레시피: 추천페이지</title>
     <link rel="stylesheet" href="/static/css/style.css">
-    <link rel="stylesheet" href="/static/css/recommend.css">  <!-- css 경로 추가 -->
+    <link rel="stylesheet" href="/static/css/recommend.css"> 
 </head>
 <body>
     <form action="{% url 'get_gpt_response' %}" method="POST">
         {% csrf_token %}
-        <a href="main.html" class="back-button">뒤로 가기</a>
+        <a href="{% url 'main' %}" class="back-button">뒤로 가기</a>
         <h1>내가 가진 재료는?</h1>
         <div class="recom-box">
             <textarea name="ingredientInput" id="ingredientInput" placeholder="재료를 입력하세요"></textarea><br>
