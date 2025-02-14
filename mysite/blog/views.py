@@ -22,6 +22,8 @@ def mysql_rdb_conn():
         database="RECIPE",
         port=3306
     )
+def mypage(request):
+    return render(request,'blog/mypage.html')
 
 def home_view(request):
     return render(request,'blog/home.html')
