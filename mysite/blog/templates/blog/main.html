@@ -12,6 +12,13 @@
 <body>
     <!-- 로그아웃 버튼 (a 태그로) -->
     <a href="{% url 'home' %}" class="back-button">로그아웃하기</a>
+
+    <!-- 마이페이지 라벨 추가 -->
+        <a href="{% url 'mypage' %}" class="mylabel">
+            {{ GLOBAL_NICKNAME }} 님
+                <img src="../../static/images/myicon.png" alt="아이콘" class="mylabel-icon">
+            </a>
+
     <h1>오늘의 레시피는?</h1>
     <!-- 각 a태그에 url연결 해놓음 -> koreanfood.html로 -->
     <div class="grid">
@@ -39,6 +46,5 @@
             <div class="belt belt4 reverse"></div> 
             <div class="belt belt5"></div>
         </div>
-
 </body>
 </html>
