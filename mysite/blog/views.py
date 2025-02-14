@@ -27,6 +27,7 @@ def mypage(request):
     return render(request,'blog/mypage.html')
 
 def home_view(request):
+    settings.GLOBAL_NICKNAME = "게스트"
     return render(request,'blog/home.html')
 
 def main_view(request):
@@ -152,7 +153,7 @@ def login(request):
 
         except Exception as e:
             messages.error(request, f"Unexpected error: {e}")
-            return redirect('home')
+            return redirect('main')
     return render(request, 'home')
 
 def guest_login(request):
