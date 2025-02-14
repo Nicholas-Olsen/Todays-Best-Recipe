@@ -1,0 +1,141 @@
+
+/* 제목부분 스타일 */
+h1 { 
+    color: #4d567b; 
+    font-size: 3.2em; 
+    font-family: 'BitBit', sans-serif;
+    font-weight: 400;
+    margin-top: 50px; 
+}
+
+.login-box { 
+    margin: 40px auto; 
+    width: 400px;  
+    padding: 20px; 
+    border: 1px solid #ccc; 
+    border-radius: 10px;
+    background-color: rgba(255, 255, 255, 0.8); /* 반투명 배경 */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    z-index: 1;
+}
+
+/* 입력 필드 */
+.login-box input { 
+    width: 100%;
+    height: 45px; 
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    box-sizing: border-box;
+    font-family: 'Galmuri9', sans-serif; 
+    font-size: 14px;
+    font-weight: normal;
+}
+
+.login-box input:focus {
+    color: #2E343E;
+}
+    
+.input-group {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 15px;
+}
+.input-group input::placeholder {
+    font-family: 'Galmuri9', sans-serif;
+    font-size: 14px;
+    color: #a4a6ab; 
+    font-weight: normal;
+}
+
+/* 회원가입... */
+.signup-btn {
+    position: absolute;
+    top: 20px;
+    right: 30px;
+    background-color: #9999a8; 
+    color: white;
+    border: none;
+    padding: 12px 20px; 
+    border-radius: 18px; 
+    cursor: pointer;
+    font-size: 19px;
+    font-family: 'RoundMo', sans-serif;
+    font-weight: 400;
+    text-decoration: none;
+    display: inline-block;
+    transition: background-color 0.3s ease;
+}
+
+.signup-btn:hover {
+    background-color: #676779; 
+}
+
+/* 로그인 하는 부분 */
+.login-btn {
+    margin-top: 10px; 
+    width: 100%; 
+    padding: 10px; 
+    background-color: #606a8a; 
+    color: white; 
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 16px;
+    font-family: 'RoundMo', sans-serif;
+    font-weight: bold;
+    text-decoration: none;
+    display: inline-block;
+    transition: background-color 0.3s ease;
+}
+
+.login-btn:hover {
+    background-color: darkblue;
+}
+
+.modal {                            /*-- 모달 창 스타일 */
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal-content {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 300px;
+    font-weight: bold;
+}
+
+.modal button {
+    margin-top: 15px;
+    padding: 10px 20px;
+    background-color: #E57157;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 20px;
+    font-weight: bold;
+}
+.homelogo {
+    display: block;
+    margin-top: 30px auto; 
+    margin-bottom: 10px auto;
+    width: 220px; 
+}
