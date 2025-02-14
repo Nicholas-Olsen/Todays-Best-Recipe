@@ -9,6 +9,8 @@ urlpatterns = [
     path('signup/',signup_view, name='signup'),
     path('login/',login, name='login'),
     path('result/',result, name='result'),
+    path('mypage/',mypage,name="mypage"),
+
 
     path('get_gpt_response/', get_gpt_response, name='get_gpt_response'),
 
