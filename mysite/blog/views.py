@@ -5,8 +5,12 @@ import pymysql
 from blog import query_sql as q
 from .models import Recipe
 import requests
-import json 
+import os
+import json
+from dotenv import load_dotenv
 import re
+from django.db import connection
+from django.conf import settings
 from django.contrib.auth.hashers import check_password
 
 # DB 연결 함수
@@ -35,8 +39,8 @@ def korean_food_list(request):
     recipes = Recipe.objects.all()
     return render(request, 'blog/koreanfood.html', {'recipes': recipes})
 
-def ko_food(request):
-    return render(request,'blog/koreanfood.html')
+# def ko_food(request):
+#     return render(request,'blog/koreanfood.html')
 
 def ja_food(request):
     return render(request,'blog/koreanfood.html')
@@ -105,6 +109,8 @@ def login(request):
         nickname = request.POST['nickname']
         password = request.POST['password']
 
+        settings.GLOBAL_NICKNAME = nickname
+
         # 닉네임 입력 확인
         if not nickname:
             messages.error(request, "닉네임을 입력하세요.")
@@ -148,21 +154,81 @@ def login(request):
 
 # GPT 연동
 
-GPT_API_URL = "https://api.openai.com/v1/chat/completions"
-GPT_API_KEY = ""
+# def get_gpt_response(request):
+#     load_dotenv()
+#
+#     GPT_API_KEY = os.getenv("GPT_API_KEY")
+#     GPT_API_URL = os.getenv("GPT_API_URL")
+#
+#     gpt_response = None
+#     ingredientInput = ""
+#
+#     if request.method == "POST":
+#         ingredientInput = request.POST.get("ingredientInput", "").strip()
+#
+#         prompt = f"""
+#         사용자가 입력한 재료를 바탕으로 가장 적절한 요리 종류(한식, 중식, 일식, 양식 등)를 결정하고, 그에 맞는 요리를 추천해줘.
+#         그리고 추천된 요리의 레시피를 단계별로 설명해줘.
+#
+#         입력된 재료: {ingredientInput}
+#
+#         출력 형식(JSON):
+#         {{
+#             "요리종류": [한식, 중식, 일식, 양식 중 하나],
+#             "추천요리이름": [요리 이름],
+#             "레시피": [
+#                  [단계 1]
+#                  [단계 2]
+#                  [단계 3]
+#             ]
+#         }}
+#         """
+#
+#         if ingredientInput:
+#             headers = {
+#                 "Authorization": f"Bearer {GPT_API_KEY}",
+#                 "Content-Type": "application/json",
+#             }
+#             data = {
+#                 "model": "gpt-3.5-turbo",
+#                 "messages": [{"role": "user", "content": prompt}],
+#                 "max_tokens": 1000,
+#             }
+#
+#             response = requests.post(GPT_API_URL, headers=headers, json=data)
+#             response.raise_for_status()
+#
+#             # ✅ 응답을 JSON 형태로 변환
+#             gpt_response_text = response.json()["choices"][0]["message"]["content"].strip()
+#             try:
+#                 gpt_response = json.loads(gpt_response_text)  # JSON 변환
+#             except json.JSONDecodeError:
+#                 gpt_response = {"error": "올바른 형식의 데이터를 반환받지 못했습니다."}
+#
+#     return render(request, "blog/result.html", {
+#         "ingredientInput": ingredientInput,
+#         "gpt_response": gpt_response
+#     })
+
 
 def get_gpt_response(request):
+
+    load_dotenv()
+
+    GPT_API_KEY = os.getenv("GPT_API_KEY")
+    GPT_API_URL = os.getenv("GPT_API_URL")
+
     if request.method == 'POST':
         ingredientInput = request.POST['ingredientInput']
 
     gpt_response = None  # 기본값 설정
-    
+
     prompt = f"""
     사용자가 입력한 재료를 바탕으로 가장 적절한 요리 종류(한식, 중식, 일식, 양식 등)를 결정하고, 그에 맞는 요리를 추천해줘.
     그리고 추천된 요리의 레시피를 단계별로 출력해줘. 단계 수는 재료와 요리에 따라 달라질 수 있어.
-    
+
     입력된 재료: {ingredientInput}
-    
+
     출력 형식:
     {{
         "dish_type": "[한식, 중식, 일식, 양식 중 하나]",
@@ -183,7 +249,7 @@ def get_gpt_response(request):
         data = {
             "model": "gpt-3.5-turbo",
             "messages": [{"role": "user", "content": prompt}],
-            "max_tokens": 1000,
+            "max_tokens": 300,
         }
 
         response = requests.post(GPT_API_URL, headers=headers, json=data)
@@ -197,14 +263,31 @@ def get_gpt_response(request):
             dish_type = parsed_response.get("dish_type", "")
             dish_name = parsed_response.get("dish_name", "")
             recipe_steps = parsed_response.get("recipe_steps", [])
-            
+
             # 숫자 글머리 제거
             recipe_steps = [re.sub(r'^\d+\.\s*', '', step) for step in recipe_steps]
         except json.JSONDecodeError:
             dish_type = dish_name = recipe_steps = []
 
     return render(request, "blog/result.html", {
+        "ingredientInput": ingredientInput,
         "dish_type": dish_type,
         "dish_name": dish_name,
         "recipe_steps": recipe_steps
     })
+
+
+
+def ko_food(request):
+    with connection.cursor() as cursor:
+        sql = q.select_ko_from_recipes()
+        cursor.execute(sql)
+        results = cursor.fetchall()
+
+    # 데이터 가공 (튜플 데이터를 리스트의 딕셔너리로 변환)
+    recipes = [
+        {"rec_id": row[0], "rec_name": row[1], "rec_descrip": row[2], "rec_detail": row[3], "rec_img": f"{row[4]}" if row[4] else None}
+        for row in results
+    ]
+
+    return render(request, "blog/koreanfood.html", {"recipes": recipes})
