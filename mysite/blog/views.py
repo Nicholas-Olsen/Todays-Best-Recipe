@@ -22,6 +22,7 @@ def mysql_rdb_conn():
         database="RECIPE",
         port=3306
     )
+
 def mypage(request):
     return render(request,'blog/mypage.html')
 
@@ -154,6 +155,10 @@ def login(request):
             return redirect('home')
     return render(request, 'home')
 
+def guest_login(request):
+    if request.method == 'POST':
+        return redirect('main')  # 로그인 성공하면 메인 페이지로
+    return render(request,'home')
 # GPT 연동
 
 # def get_gpt_response(request):
