@@ -7,28 +7,6 @@ h1 {
     margin-left: 50px;
 }
 
-/* mylabel */
-.mylabel {
-    position: fixed;
-    top: 20px;
-    right: 20px;
-    font-family: 'RoundMo', sans-serif;
-    font-size: 22px;
-    color: #545d77;
-    font-weight: bold;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    text-decoration: none; 
-}
-/* 마이페이지로 연결되는 아이콘 */
-.mylabel-icon {
-    width: 40px; 
-    height: 45px;
-    object-fit: cover; 
-    margin-right: 40px;
-}
-
 /* 그리드~ */
 .grid { 
     display: grid; 
