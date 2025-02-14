@@ -28,6 +28,7 @@ h1 {
     flex-direction: column;
     gap: 15px;
 }
+
 /* 입력 */
 .login-box input { 
     width: 100%;
@@ -130,12 +131,13 @@ h1 {
     transition: background-color 0.3s ease;
 }
 
+
 .guest-btn:hover {
     background-color: #4d5ab3;
 }
 
-/*-- 모달 창 스타일 */
-.modal {                            
+ /*-- 모달 창 스타일 */
+.modal {                           
     display: none;
     position: fixed;
     z-index: 1000;
