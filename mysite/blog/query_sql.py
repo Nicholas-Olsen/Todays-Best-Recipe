@@ -66,7 +66,11 @@ def select_ing_by_type(): # 음식의 카테고리별로 음식 사진 조회
     """
     return sql
 
-
+def select_ko_from_recipes():
+    sql="""
+    SELECT rec_id, rec_name, rec_descrip, rec_detail, rec_img FROM recipes WHERE rec_type = '한식'
+    """
+    return sql
 
 #recipes 테이블 관련 - 음식이름으로
 def select_foodtype_by_name(): # 음식의 이름별로 음식 카테고리리
@@ -89,15 +93,6 @@ def select_img_by_name(): # 음식의 이름별로 음식 사진 조회
     return sql
 
 
-
-
-
-#recipe_steps 테이블
-def select_steps_from_recipe_steps():
-    sql="""
-    SELECT step_number, step_description from recipe_steps WHERE rec_id = %s
-"""
-    return sql
 
 
 
