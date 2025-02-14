@@ -1,45 +1,119 @@
-<!DOCTYPE html>
-<html lang="ko">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>오늘의레시피: 추천페이지</title>
-    <link rel="stylesheet" href="/static/css/style.css">
-    <link rel="stylesheet" href="/static/css/recommend.css"> 
-</head>
-<body>
-    <form action="{% url 'get_gpt_response' %}" method="POST">
-        {% csrf_token %}
-        <a href="{% url 'main' %}" class="back-button">뒤로 가기</a>
-        <h1>내가 가진 재료는?</h1>
-        <div class="recom-box">
-            <textarea name="ingredientInput" id="ingredientInput" placeholder="재료를 입력하세요"></textarea><br>
-            <button type="submit" class="recom-btn">레시피 추천</button>
-        </div>
+ h1 { 
+    color: #4d567b; 
+    font-size: 3.2em;
+    font-family: 'BitBit', sans-serif;
+    font-weight: 400;
+    margin-top: 40px;
+ }
 
-        <div class="container">
-            <div class="belt belt1"></div>
-            <div class="belt belt2 reverse"></div>
-            <div class="belt belt3"></div>
-            <div class="belt belt4 reverse"></div>
-            <div class="belt belt5"></div>
-        </div>
+/* 뒤로 가기 */
+.back-button {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    background-color: #f4f4f7;
+    color: #2a3478;
+    border: 1px solid #ccc;
+    padding: 15px 22px;
+    border-radius: 20px;
+    font-family: 'RoundMo', sans-serif;
+    cursor: pointer;
+    font-size: 20px;
+    text-decoration: none;
+    display: inline-block;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+.back-button:hover { background-color: #2a3478; color: white; }
 
-        <div id="warningModal" class="modal">
-            <div class="modal-content">
-                <p>재료 정보가 충분하지 않습니다!</p>  
-                <button onclick="closeModal()">다시 시도</button>
-            </div>
-        </div>
-    </form>
-    <script>
-        // function validateInput() {
-        //         window.location.replace("{% url 'result' %}");
-        //
-        // }
-        // function closeModal() {
-        //     document.getElementById('warningModal').style.display = 'none';
-        // }
-    </script>
-</body>
-</html>
+form {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.recom-box {
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    background-color: rgba(255, 255, 255, 0.8);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+    z-index: 1;
+}
+.recom-box textarea {
+    width: 100%;
+    height: 200px;
+    padding: 5px;
+    font-size: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-bottom: 15px;
+    box-sizing: border-box;
+    font-family: 'Galmuri9', sans-serif;
+    font-weight: normal;
+    background-color: #fbfbfb;
+    resize: vertical;
+}
+
+.recom-box textarea:focus {
+    color: #2E343E;
+    background-color: #eef0f9;
+}
+/* 레시피 추천 버튼 */
+.recom-btn {
+    margin-top: 10px;
+    width: 70%;
+    padding: 10px;
+    background-color: #606a8a;
+    color: white;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 20px;
+    font-family: 'RoundMo', sans-serif;
+    font-weight: bold;
+    text-decoration: none;
+    display: inline-block;
+    transition: background-color 0.3s ease;
+}
+.recom-btn:hover { background-color: darkblue; }
+
+/* 모달 창 */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+.modal-content {
+    background-color: white;
+    padding: 30px;
+    border-radius: 10px;
+    text-align: center;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    height: 170px;
+}
+.modal button {
+    margin-top: 30px;
+    padding: 10px 20px;
+    background-color: #E57157;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 18px;
+    font-weight: bold;
+}

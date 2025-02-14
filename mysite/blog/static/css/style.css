@@ -65,7 +65,7 @@ body {
     opacity: 0.6; 
     background-size: auto 100%; 
     background-repeat: repeat-x;
-    animation: move-left 10s linear infinite;
+    animation: move-left 13s linear infinite;
     animation-fill-mode: forwards; 
 }
 
@@ -77,7 +77,7 @@ body {
 
 /* 짝수= 반대 방향 */
 .belt.reverse {
-    animation: move-right 15s linear infinite;
+    animation: move-right 16s linear infinite;
     animation-fill-mode: forwards;
 }
 

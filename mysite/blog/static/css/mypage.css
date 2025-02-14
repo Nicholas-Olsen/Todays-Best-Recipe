@@ -1,0 +1,50 @@
+/* mylabel */
+.mylabel {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    font-family: 'RoundMo', sans-serif;
+    font-size: 22px;
+    color: #687291;
+    font-weight: normal;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    text-decoration: none; 
+}
+
+/* 마이페이지로 연결되는 아이콘 */
+.mylabel-icon-wrapper {
+    width: 40px;
+    height: 40px;
+    margin-left: 12px;
+    background-color: transparent;
+    transition: background-color 0.3s ease;
+}
+
+.mylabel-icon {
+    width: 40px;
+    height: 40px;
+    object-fit: cover;
+    transition: filter 0.3s ease;
+}
+
+.mylabel:hover .mylabel-icon-wrapper {
+    background-color: rgba(63, 122, 213, 0.5); /* 투명도가 낮은 #3f7ad5 */
+}
+
+/* 툴팁 표시 */
+.mylabel:hover::after {
+    content: '마이페이지';
+    position: absolute;
+    bottom: -25px;
+    left: 0;
+    padding: 5px;
+    background-color: #7c7e81;
+    color: white;
+    font-size: 13px;
+    font-family: 'Galmuri9', sans-serif;
+    font-weight: 400;
+    border-radius: 5px;
+    white-space: nowrap;
+}

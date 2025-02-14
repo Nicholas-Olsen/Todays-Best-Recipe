@@ -11,13 +11,13 @@
     <a href="{% url 'recommend' %}" class="again-button">다시 입력</a>
 
     <h1>오늘의 레시피 추천</h1>
-    <form action="{% url 'main' %}" method="POST">        <!-- 여기가 바뀜 ! -->
+    <form action="{% url 'main' %}" method="POST">    
         {% csrf_token %}
         <div class="result-box">
             {% if dish_name %}
-                <h2><span class="bullet">●</span>추천 요리 : <span class="response-text">{{ dish_name }}</span></h2>
-                <p><span class="bullet">●</span>요리 종류 : <span class="response-text">{{ dish_type }}</span></p>
-                <h3><span class="bullet">●</span>레시피 단계</h3>
+                <h2><span class="bullet">●</span>추천 요리 : <span class="response-text"><h2>{{ dish_name }}</h2></span></h2>
+                <h2><span class="bullet">●</span>요리 종류 : <span class="response-text"><h2>{{ dish_type }}</h2></span></h2>
+                <h2><span class="bullet">●</span>레시피 단계</h2>
                 <ol>
                     {% for step in recipe_steps %}
                         <li>{{ step }}</li>

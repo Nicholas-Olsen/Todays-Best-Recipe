@@ -94,11 +94,6 @@ def select_img_by_name(): # 음식의 이름별로 음식 사진 조회
 
 
 
-
-
-
-
-
 #user_ingredients 테이블 관련
 def delete_all_u_i():
     sql = """

@@ -10,4 +10,3 @@ class Recipe(models.Model):
 
     def __str__(self):
         return self.rec_name  # 객체 출력 시 레시피 이름 표시
-
