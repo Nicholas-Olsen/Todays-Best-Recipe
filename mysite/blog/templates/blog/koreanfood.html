@@ -1,75 +1,86 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>한식 레시피</title>
+    <link rel="stylesheet" href="../../static/css/style.css">
+    <link rel="stylesheet" href="../../static/css/koreanfood.css">
+</head>
+<body>
+    <a href="{% url 'main' %}" class="back-button">뒤로가기</a>
+    <h1>한식 레시피</h1>
+    <div class="grid">
+            {% for recipe in recipes %}
+            <a href="" class="category-link">
+                <div class="category">
+                    {% if recipe.rec_img %}
+                        <img src="{{ recipe.rec_img }}" alt="{{ recipe.rec_name }}">
+                    {% else %}
+                        <p>이미지 없음</p>
+                    {% endif %}
+                    <p>{{ recipe.rec_name }}</p>
+                </div>
+            </a>
+            {% endfor %}
+    </div>
+<!--    <div id="recipe-modal" class="modal">-->
+<!--        <div class="modal-content">-->
+<!--            <span id="close-modal" class="close">&times;</span>-->
+<!--            <h2 id="modal-title"></h2>-->
+<!--            <img id="modal-image" src="" alt="Recipe Image">-->
+<!--            <p id="modal-description"></p>-->
+<!--            <p id="modal-detail"></p>-->
+<!--        </div>-->
+<!--    </div>-->
 
-    <head>
-        <meta charset="UTF-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="../../static/css/koreanfood.css">
-        <script src="https://kit.fontawesome.com/kit_code.js" crossorigin="anonymous">
-        </script>
-        <title>Nav Bar</title>
-    </head>
-
-    <body>
-        <div class="main_top">
-            <div class="logo">
-                <a><img src="../../static/img/logo1.png"></a>
-            </div>
-            <div class="icons">
-                <a><img src="../../static/img/loginiconpng.png"></a>
-                <a><img src="../../static/img/plusicon.png"></a>
-            </div>
-        </div>
-        <nav class="navbar">
-            <div class="navbar__logo">
-                <i class="fas fa-blog"></i>
-                <a href="">RECIPE</a>
-            </div>
-            <ul class="navbar__menu">
-                <li><a href="#">Home</a></li>
-                <li><a href="#">한식</a></li>
-                <li><a href="#">중식</a></li>
-                <li><a href="#">일식</a></li>
-                <li><a href="#">양식</a></li>
-                <li><a href="#">디저트</a></li>
-            </ul>
-            <ul class="navbar__icons">
-                <li><i class="fab fa-google"></i></li>
-                <li><i class="fab fa-slack"></i></li>
-            </ul>
-        </nav>
-        <div class="main_middle">
-            <div class="">
-            </div>
-            <ul>
-            <table>
-    <tr>
-        <th>ID</th>
-        <th>이름</th>
-        <th>설명</th>
-        <th>상세</th>
-        <th>이미지</th>
-    </tr>
-    {% for recipe in recipes %}
-    <tr>
-        <td>{{ recipe.rec_id  }}</td>
-<!--        <td>{{ GLOBAL_NICKNAME  }}</td>-->
-        <td>{{ recipe.rec_name }}</td>
-        <td>{{ recipe.rec_descrip }}</td>
-        <td>{{ recipe.rec_detail }}</td>
-        <td>
-            {% if recipe.rec_img %}
-                <img src="{{ recipe.rec_img }}" alt="{{ recipe.rec_name }}" style="width: 150px; height: auto;">
-            {% else %}
-                <p>이미지 없음</p>
-            {% endif %}
-        </td>
-    </tr>
-    {% endfor %}
-</table>
-
-        </ul>
-        </div>
-    </body>
+    <div class="container">
+        <div class="belt belt1"></div>
+        <div class="belt belt2 reverse"></div>
+        <div class="belt belt3"></div>
+        <div class="belt belt4 reverse"></div>
+        <div class="belt belt5"></div>
+    </div>
+</body>
 </html>
+<!--<script>-->
+<!--    document.addEventListener("DOMContentLoaded", function () {-->
+<!--    const categoryLinks = document.querySelectorAll(".category-link");-->
+
+<!--    categoryLinks.forEach(link => {-->
+<!--        link.addEventListener("click", function (event) {-->
+<!--            event.preventDefault(); // 기본 링크 이동 방지-->
+
+<!--            let recipeId = this.dataset.id; // 클릭한 요소의 데이터 ID 가져오기-->
+<!--            if (!recipeId) return;-->
+
+<!--            // Django API 호출하여 레시피 정보 가져오기-->
+<!--            fetch(`/recipe/${recipeId}/`)-->
+<!--                .then(response => response.json())-->
+<!--                .then(data => {-->
+<!--                    document.querySelector("#modal-title").textContent = data.rec_name;-->
+<!--                    document.querySelector("#modal-description").textContent = data.rec_descrip;-->
+<!--                    document.querySelector("#modal-detail").textContent = data.rec_detail;-->
+
+<!--                    let modalImage = document.querySelector("#modal-image");-->
+<!--                    if (data.rec_img) {-->
+<!--                        modalImage.src = data.rec_img;-->
+<!--                        modalImage.style.display = "block";-->
+<!--                    } else {-->
+<!--                        modalImage.style.display = "none";-->
+<!--                    }-->
+
+<!--                    // 모달창 열기-->
+<!--                    document.querySelector("#recipe-modal").style.display = "block";-->
+<!--                })-->
+<!--                .catch(error => console.error("Error fetching recipe:", error));-->
+<!--        });-->
+<!--    });-->
+
+<!--    // 모달창 닫기-->
+<!--    document.querySelector("#close-modal").addEventListener("click", function () {-->
+<!--        document.querySelector("#recipe-modal").style.display = "none";-->
+<!--    });-->
+<!--});-->
+
+<!--</script>-->
