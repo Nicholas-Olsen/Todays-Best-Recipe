@@ -8,13 +8,13 @@
         <link rel="stylesheet" href="../../static/css/koreanfood.css">
         <script src="https://kit.fontawesome.com/kit_code.js" crossorigin="anonymous">
         </script>
-        <title>오늘의레시피: 한식</title>
+        <title>Nav Bar</title>
     </head>
 
     <body>
         <div class="main_top">
             <div class="logo">
-                <a><img src="../../static/img/logo.png"></a>
+                <a><img src="../../static/img/logo1.png"></a>
             </div>
             <div class="icons">
                 <a><img src="../../static/img/loginiconpng.png"></a>
@@ -43,15 +43,32 @@
             <div class="">
             </div>
             <ul>
-            {% for recipe in recipes %}
-                <li>
-                    <h2>{{ recipe.rec_name }}</h2>
-                    <p>{{ recipe.rec_descrip }}</p>
-                    <p>{{ recipe.rec_detail }}</p>
-                    <img src="{{ recipe.rec_img.url }}" alt="{{ recipe.rec_name }}" width="300">
-                </li>
+            <table>
+    <tr>
+        <th>ID</th>
+        <th>이름</th>
+        <th>설명</th>
+        <th>상세</th>
+        <th>이미지</th>
+    </tr>
+    {% for recipe in recipes %}
+    <tr>
+        <td>{{ recipe.rec_id  }}</td>
+<!--        <td>{{ GLOBAL_NICKNAME  }}</td>-->
+        <td>{{ recipe.rec_name }}</td>
+        <td>{{ recipe.rec_descrip }}</td>
+        <td>{{ recipe.rec_detail }}</td>
+        <td>
+            {% if recipe.rec_img %}
+                <img src="{{ recipe.rec_img }}" alt="{{ recipe.rec_name }}" style="width: 150px; height: auto;">
+            {% else %}
+                <p>이미지 없음</p>
+            {% endif %}
+        </td>
+    </tr>
+    {% endfor %}
+</table>
 
-            {% endfor %}
         </ul>
         </div>
     </body>
