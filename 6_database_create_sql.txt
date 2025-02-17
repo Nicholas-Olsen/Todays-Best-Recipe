@@ -23,9 +23,9 @@ CREATE TABLE users (
 );
 
 CREATE TABLE users_list (
-    id int NOT NULL PRIMARY KEY,
-    nickname VARCHAR(30)
-    recom_rec_name varchar(30)
+    id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    nickname VARCHAR(30),
+    recom_rec_name varchar(30),
     list TEXT
 );
 
