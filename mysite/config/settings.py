@@ -145,4 +145,4 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-GLOBAL_NICKNAME = "none"
+GLOBAL_NICKNAME = "게스트"
