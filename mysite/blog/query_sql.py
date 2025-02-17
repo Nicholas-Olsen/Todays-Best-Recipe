@@ -43,6 +43,10 @@ select rec_id from recipes where rec_name = %s;
     return sql
 
 
+#user_list 관련
+def insert_list_recom():
+
+
 
 
 
