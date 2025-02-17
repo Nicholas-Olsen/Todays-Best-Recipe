@@ -116,14 +116,15 @@ h1 {
 
 /* 게스트 로그인 */
 .guest-btn {
-    margin-top: 10px; 
-    width: 100%; 
-    padding: 10px;
+    margin-top: 5px; 
+    margin-left: -12px;
+    width: 120%; 
+    padding: 15px;
     background-color: #979dbf;
     color: white;
     border-radius: 10px;
     cursor: pointer;
-    font-size: 16px;
+    font-size: 18px;
     font-family: 'RoundMo', sans-serif;
     font-weight: bold;
     text-decoration: none;
