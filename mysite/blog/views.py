@@ -12,6 +12,8 @@ import re
 from django.db import connection
 from django.conf import settings
 from django.contrib.auth.hashers import check_password
+from django.http import JsonResponse
+from django.shortcuts import get_object_or_404
 
 # DB 연결 함수
 def mysql_rdb_conn():
@@ -27,7 +29,6 @@ def mypage(request):
     return render(request,'blog/mypage.html')
 
 def home_view(request):
-    settings.GLOBAL_NICKNAME = "게스트"
     return render(request,'blog/home.html')
 
 def main_view(request):
@@ -36,7 +37,7 @@ def main_view(request):
 def signup_view(request):
     return render(request,'blog/signup.html')
 
-def koreanfood(request):
+def ko_food(request):
     return render(request,'blog/koreanfood.html')
 
 def korean_food_list(request):
@@ -133,7 +134,7 @@ def login(request):
                     nickname_chk = q.select_nickname_from_users()
                     curs.execute(nickname_chk, (nickname,))
                     if curs.fetchone() is None:
-                        messages.error(request, "아이디가 존재하지 않습니다.")  
+                        messages.error(request, "아이디가 존재하지 않습니다.")
                         return redirect('home')
 
                     # 비밀번호 맞나 체크
@@ -153,70 +154,14 @@ def login(request):
 
         except Exception as e:
             messages.error(request, f"Unexpected error: {e}")
-            return redirect('main')
+            return redirect('home')
     return render(request, 'home')
 
 def guest_login(request):
     if request.method == 'POST':
+        settings.GLOBAL_NICKNAME = "게스트"
         return redirect('main')  # 로그인 성공하면 메인 페이지로
     return render(request,'home')
-# GPT 연동
-
-# def get_gpt_response(request):
-#     load_dotenv()
-#
-#     GPT_API_KEY = os.getenv("GPT_API_KEY")
-#     GPT_API_URL = os.getenv("GPT_API_URL")
-#
-#     gpt_response = None
-#     ingredientInput = ""
-#
-#     if request.method == "POST":
-#         ingredientInput = request.POST.get("ingredientInput", "").strip()
-#
-#         prompt = f"""
-#         사용자가 입력한 재료를 바탕으로 가장 적절한 요리 종류(한식, 중식, 일식, 양식 등)를 결정하고, 그에 맞는 요리를 추천해줘.
-#         그리고 추천된 요리의 레시피를 단계별로 설명해줘.
-#
-#         입력된 재료: {ingredientInput}
-#
-#         출력 형식(JSON):
-#         {{
-#             "요리종류": [한식, 중식, 일식, 양식 중 하나],
-#             "추천요리이름": [요리 이름],
-#             "레시피": [
-#                  [단계 1]
-#                  [단계 2]
-#                  [단계 3]
-#             ]
-#         }}
-#         """
-#
-#         if ingredientInput:
-#             headers = {
-#                 "Authorization": f"Bearer {GPT_API_KEY}",
-#                 "Content-Type": "application/json",
-#             }
-#             data = {
-#                 "model": "gpt-3.5-turbo",
-#                 "messages": [{"role": "user", "content": prompt}],
-#                 "max_tokens": 1000,
-#             }
-#
-#             response = requests.post(GPT_API_URL, headers=headers, json=data)
-#             response.raise_for_status()
-#
-#             # ✅ 응답을 JSON 형태로 변환
-#             gpt_response_text = response.json()["choices"][0]["message"]["content"].strip()
-#             try:
-#                 gpt_response = json.loads(gpt_response_text)  # JSON 변환
-#             except json.JSONDecodeError:
-#                 gpt_response = {"error": "올바른 형식의 데이터를 반환받지 못했습니다."}
-#
-#     return render(request, "blog/result.html", {
-#         "ingredientInput": ingredientInput,
-#         "gpt_response": gpt_response
-#     })
 
 
 def get_gpt_response(request):
@@ -233,8 +178,8 @@ def get_gpt_response(request):
 
     prompt = f"""
     사용자가 입력한 재료를 바탕으로 가장 적절한 요리 종류(한식, 중식, 일식, 양식 등)를 결정하고, 그에 맞는 요리를 추천해줘.
-    그리고 추천된 요리의 레시피를 단계별로 출력해줘. 단계 수는 재료와 요리에 따라 달라질 수 있어. 
-    단계별로 사용하는 식재료의 개수 혹은 양은은 구체적으로 말해줘.
+    그리고 추천된 요리의 레시피를 단계별로 출력해줘. 단계 수는 재료와 요리에 따라 달라질 수 있어.
+    단계별로 사용하는 식재료의 개수 혹은 양은 구체적으로 말해줘.
 
     입력된 재료: {ingredientInput}
 
@@ -286,6 +231,12 @@ def get_gpt_response(request):
     })
 
 
+def result_by_type(request):
+    if request.method == 'POST':
+        name = request.POST['{{recipe.rec_name}}']
+    settings.GLOBAL_SELECT_TYPE = request.POST['name']
+    return render(request, "blog/home.html",)
+
 
 def ko_food(request):
     with connection.cursor() as cursor:
@@ -300,3 +251,71 @@ def ko_food(request):
     ]
 
     return render(request, "blog/koreanfood.html", {"recipes": recipes})
+
+
+from django.shortcuts import render, get_object_or_404, redirect
+from django.contrib import messages
+from .models import Recipe
+# from .utils import mysql_rdb_conn
+from blog import query_sql as q
+
+
+def recipe_detail(request, rec_id=None):
+    print(f"Received rec_id: {rec_id}")  # rec_id 확인
+
+    if request.method == "POST":
+        rec_id = request.POST.get('rec_id')
+        print(f"POST request received, rec_id: {rec_id}")  # POST 요청 확인
+
+        if rec_id:
+            recipe = get_object_or_404(Recipe, rec_id=rec_id)
+            return render(request, 'recipe_detail.html', {'recipe': recipe})
+        else:
+            return render(request, 'recipe_detail.html', {'error': '레시피 ID가 없습니다.'})
+
+    if rec_id:
+        try:
+            rec_id = int(rec_id)  # rec_id를 정수형으로 변환
+            print(f"Converted rec_id: {rec_id}")  # 변환된 rec_id 출력
+
+            with mysql_rdb_conn() as conn:
+                with conn.cursor() as curs:
+                    curs.execute(q.select_foodname_by_id(), (rec_id,))
+                    rec_name = curs.fetchone()
+
+                    curs.execute(q.select_descrip_by_id(), (rec_id,))
+                    rec_descrip = curs.fetchone()
+
+                    curs.execute(q.select_img_by_id(), (rec_id,))
+                    rec_img = curs.fetchone()
+
+                    curs.execute(q.select_detail_by_id(), (rec_id,))
+                    rec_detail = curs.fetchone()
+
+                    print(f"rec_name: {rec_name}, rec_descrip: {rec_descrip}, rec_img: {rec_img}, rec_detail: {rec_detail}")
+
+                    if rec_name:
+                        return render(request, 'recipe_detail.html', {
+                            'rec_name': rec_name[0] if rec_name else '정보 없음',
+                            'rec_descrip': rec_descrip[0] if rec_descrip else '설명 없음',
+                            'rec_img': rec_img[0] if rec_img else None,
+                            'rec_detail': rec_detail[0] if rec_detail else '상세 정보 없음'
+                        })
+                    else:
+                        messages.error(request, "레시피를 찾을 수 없습니다.")
+                        print("레시피를 찾을 수 없습니다.")
+                        return redirect('main')
+
+        except ValueError:
+            messages.error(request, "잘못된 레시피 ID 형식입니다.")
+            print("잘못된 레시피 ID 형식입니다.")
+            return redirect('main')
+
+        except Exception as e:
+            messages.error(request, f"Unexpected error: {e}")
+            print(f"Unexpected error: {e}")  # 예외 메시지 출력
+            return redirect('main')
+
+    messages.error(request, "잘못된 요청입니다.")
+    print("잘못된 요청입니다.")
+    return redirect('main')
