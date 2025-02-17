@@ -172,14 +172,16 @@ def get_gpt_response(request):
     GPT_API_URL = os.getenv("GPT_API_URL")
 
     if request.method == 'POST':
-        ingredientInput = request.POST['ingredientInput']
+        ingredientInput = request.POST.get('ingredientInput', '') 
 
     gpt_response = None  # 기본값 설정
+    recommended_recipe_name = ""  # 추천된 요리 이름 기본값
+    dish_type, dish_name, recipe_steps = "", "", []  # 기본값 설정
 
     prompt = f"""
     사용자가 입력한 재료를 바탕으로 가장 적절한 요리 종류(한식, 중식, 일식, 양식 등)를 결정하고, 그에 맞는 요리를 추천해줘.
-    그리고 추천된 요리의 레시피를 단계별로 출력해줘. 단계 수는 재료와 요리에 따라 달라질 수 있어.
-    단계별로 사용하는 식재료의 개수 혹은 양은 구체적으로 말해줘.
+    그리고 추천된 요리의 레시피를 단계별로 출력해줘. 단계 수는 재료와 요리에 따라 달라질 수 있어. 
+    단계별로 사용하는 식재료의 개수 혹은 양은 가능한 구체적으로 말해줘.
 
     입력된 재료: {ingredientInput}
 
@@ -208,7 +210,6 @@ def get_gpt_response(request):
 
         response = requests.post(GPT_API_URL, headers=headers, json=data)
         response.raise_for_status()  # 오류 발생 시 예외 발생
-
         gpt_response = response.json()["choices"][0]["message"]["content"].strip()
 
         # 응답을 JSON 형식으로 파싱
@@ -220,9 +221,36 @@ def get_gpt_response(request):
 
             # 숫자 글머리 제거
             recipe_steps = [re.sub(r'^\d+\.\s*', '', step) for step in recipe_steps]
+            recommended_recipe_name = dish_name  # 추천된 요리 이름 저장
+
+            inset_list_data = json.dumps(recipe_steps, ensure_ascii=False)
+            
+            with mysql_rdb_conn() as conn:
+                with conn.cursor() as curs:
+                    if settings.GLOBAL_NICKNAME != "게스트":
+                        query = q.insert_list_recom()
+                        if not query:  # SQL 쿼리가 None인지 체크
+                            raise ValueError("q.insert_list_recom()이 None을 반환하고 있습니다.")
+                
+                        insert_data_into_users_list = (settings.GLOBAL_NICKNAME,recommended_recipe_name,inset_list_data)
+
+                        print("Executing Query:", query)  # 디버깅 로그
+                        print("Data:", insert_data_into_users_list)  # 디버깅 로그
+                        
+                        curs.execute(query,insert_data_into_users_list)
+                        conn.commit()
+                    else:
+                        messages.add_message(request, messages.ERROR, "게스트는 마이페이지 접속이 불가능합니다.")
+
+        except json.JSONDecodeError:
+            print("Error: GPT 응답을 JSON으로 변환하는 데 실패했습니다.")
+        except RequestException as e:
+            print(f"Error: OpenAI API 요청 실패 - {e}")
+        except DatabaseError as e:
+            print(f"Error: 데이터베이스 오류 발생 - {e}")
         except json.JSONDecodeError:
             dish_type = dish_name = recipe_steps = []
-
+            
     return render(request, "blog/result.html", {
         "ingredientInput": ingredientInput,
         "dish_type": dish_type,
@@ -243,8 +271,6 @@ def ko_food(request):
         sql = q.select_ko_from_recipes()
         cursor.execute(sql)
         results = cursor.fetchall()
-
-    # 데이터 가공 (튜플 데이터를 리스트의 딕셔너리로 변환)
     recipes = [
         {"rec_id": row[0], "rec_name": row[1], "rec_descrip": row[2], "rec_detail": row[3], "rec_img": f"{row[4]}" if row[4] else None}
         for row in results
