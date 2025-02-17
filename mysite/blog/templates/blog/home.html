@@ -62,9 +62,12 @@
     
             <div class="button-container">
                 <button type="submit" class="login-btn">로그인</button>
-                <button type="submit" formaction="{% url 'guest_login' %}" class="guest-btn">게스트 로그인</button>
             </div>
         </div>
+    </form>
+    <form action="{% url 'guest_login' %}" method="POST">
+        {% csrf_token %}
+        <button type="submit" formaction="{% url 'guest_login' %}" class="guest-btn">게스트 로그인</button>
     </form>
 
     <div class="container">           
