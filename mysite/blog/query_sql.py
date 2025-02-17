@@ -48,7 +48,7 @@ def insert_list_recom():
     sql="""
     INSERT INTO users_list (nickname,recom_rec_name,list) VALUES (%s,%s,%s)
     """
-
+    return sql
 
 
 
