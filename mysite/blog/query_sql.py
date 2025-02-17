@@ -45,7 +45,9 @@ select rec_id from recipes where rec_name = %s;
 
 #user_list 관련
 def insert_list_recom():
-
+    sql="""
+    INSERT INTO users_list (nickname,recom_rec_name,list) VALUES (%s,%s,%s)
+    """
 
 
 
