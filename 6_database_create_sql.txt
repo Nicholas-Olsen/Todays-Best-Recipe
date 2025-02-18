@@ -22,7 +22,7 @@ CREATE TABLE users (
     password VARCHAR(255)
 );
 
-CREATE TABLE users_list (
+CREATE TABLE userlist (
     id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
     nickname VARCHAR(30),
     recom_rec_name varchar(30),
