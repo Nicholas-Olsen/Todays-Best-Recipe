@@ -1,0 +1,68 @@
+/* 기본 스타일 */
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f8f8f8;
+    text-align: center;
+}
+
+/* 뒤로가기 버튼 */
+.back-button {
+    display: inline-block;
+    margin: 20px;
+    padding: 10px 20px;
+    background-color: #ff6b6b;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: bold;
+    transition: background 0.3s;
+}
+
+.back-button:hover {
+    background-color: #e63946;
+}
+
+/* 레시피 제목 */
+h1 {
+    color: #333;
+    font-size: 2em;
+    margin-bottom: 10px;
+}
+
+/* 레시피 컨테이너 */
+.recipe-container {
+    max-width: 600px;
+    background: white;
+    padding: 20px;
+    margin: 20px auto;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* 레시피 이미지 */
+.recipe-detail-image {
+    width: 100%;
+    max-height: 300px;
+    object-fit: cover;
+    border-radius: 10px;
+    margin-bottom: 15px;
+}
+
+/* 설명 및 상세 레시피 */
+p {
+    font-size: 1.1em;
+    color: #555;
+    line-height: 1.5;
+    margin-bottom: 10px;
+}
+
+/* 벨트 애니메이션 (추가 요소 스타일링) */
+.container {
+    margin-top: 30px;
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+ 모달의 배경
