@@ -35,20 +35,14 @@ def rec_descrip_from_steps():
 select step_description from recipe_steps where rec_id = %s;
 """
     return sql
-    
+
 def rec_name_to_rec_id():
     sql="""
 select rec_id from recipes where rec_name = %s;
-""" 
+"""
     return sql
 
 
-#user_list 관련
-def insert_list_recom():
-    sql="""
-    INSERT INTO users_list (nickname,recom_rec_name,list) VALUES (%s,%s,%s)
-    """
-    return sql
 
 
 
@@ -60,7 +54,7 @@ def select_foodname_by_type(): # 음식의 카테고리별로 음식 이름 조�
     """
     return sql
 
-def select_descrip_by_type(): # 음식의 카테고리별로 음식 설명 조회 
+def select_descrip_by_type(): # 음식의 카테고리별로 음식 설명 조회
     sql=""" 
     SELECT rec_descrip from recipes where rec_type = %s
     """
@@ -72,29 +66,44 @@ def select_ing_by_type(): # 음식의 카테고리별로 음식 사진 조회
     """
     return sql
 
-def select_ko_from_recipes():
+def select_ko_from_recipes(category):
     sql="""
-    SELECT rec_id, rec_name, rec_descrip, rec_detail, rec_img FROM recipes WHERE rec_type = '한식'
+    SELECT rec_id, rec_name, rec_descrip, rec_detail, rec_img FROM recipes WHERE rec_type = %s
     """
-    return sql
+    return sql , [category]
+
 
 #recipes 테이블 관련 - 음식이름으로
-def select_foodtype_by_name(): # 음식의 이름별로 음식 카테고리리
+def select_foodname_by_id(): # 음식의 이름별로 음식 카테고리리
     sql=""" 
-    SELECT rec_type from recipes where rec_name = %s
+    SELECT rec_name from recipes where rec_id = %s
     """
     return sql
 
-def select_descrip_by_name(): # 음식의 이름별로 음식 설명 조회 
+def select_descrip_by_id(): # 음식의 이름별로 음식 설명 조회
     sql=""" 
-    SELECT rec_descrip from recipes where rec_name = %s
+    SELECT rec_descrip from recipes where rec_id = %s
     """
     return sql
 
 
-def select_img_by_name(): # 음식의 이름별로 음식 사진 조회
+def select_img_by_id(): # 음식의 이름별로 음식 사진 조회
     sql=""" 
-    SELECT rec_img from recipes where rec_name = %s
+    SELECT rec_img from recipes where rec_id = %s
+    """
+    return sql
+
+def select_detail_by_id(): # 음식의 이름별로 음식 사진 조회
+    sql="""
+    SELECT rec_detail from recipes where rec_id = %s
+    """
+    return sql
+
+
+#user_list 관련
+def insert_list_recom():
+    sql="""
+    INSERT INTO users_list (nickname,recom_rec_name,list) VALUES (%s,%s,%s)
     """
     return sql
 
@@ -109,7 +118,7 @@ def delete_all_u_i():
 
 # def insert_ingredient_for_user(): # user_ingredients 테이블에 재료 입력하는 쿼리 (존재하지 않는 재료도 삽입)
 #     sql = """
-#     INSERT INTO user_ingredients (user_id, ing_id) 
+#     INSERT INTO user_ingredients (user_id, ing_id)
 #     VALUES (%s, %s)
 #     """
 #     return sql
@@ -127,7 +136,7 @@ def delete_all_u_i():
 
 # def insert_new_ingredient(): # ingredients 테이블에 없는 재료를 새로 삽입하는 쿼리
 #     sql = """
-#     INSERT INTO ingredients (ing_name) 
+#     INSERT INTO ingredients (ing_name)
 #     VALUES (%s)
 #     """
 #     return sql

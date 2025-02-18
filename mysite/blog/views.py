@@ -1,9 +1,4 @@
-from django.shortcuts import render
-from django.shortcuts import render, redirect
-from django.contrib import messages
 import pymysql
-from blog import query_sql as q
-from .models import Recipe
 import requests
 import os
 import json
@@ -11,8 +6,11 @@ from dotenv import load_dotenv
 import re
 from django.db import connection
 from django.conf import settings
-from django.contrib.auth.hashers import check_password
+from django.shortcuts import render, get_object_or_404, redirect
+from django.contrib import messages
+from blog import query_sql as q
 from django.http import JsonResponse
+from django.template.loader import render_to_string
 from django.shortcuts import get_object_or_404
 
 # DB 연결 함수
@@ -40,13 +38,6 @@ def signup_view(request):
 def ko_food(request):
     return render(request,'blog/koreanfood.html')
 
-def korean_food_list(request):
-    recipes = Recipe.objects.all()
-    return render(request, 'blog/koreanfood.html', {'recipes': recipes})
-
-# def ko_food(request):
-#     return render(request,'blog/koreanfood.html')
-
 def ja_food(request):
     return render(request,'blog/koreanfood.html')
 
@@ -64,8 +55,6 @@ def recommend(request):
 
 def result(request):
     return render(request,'blog/result.html')
-
-
 
 def signup(request):
     if request.method == 'POST':
@@ -165,14 +154,13 @@ def guest_login(request):
 
 
 def get_gpt_response(request):
-
     load_dotenv()
 
     GPT_API_KEY = os.getenv("GPT_API_KEY")
     GPT_API_URL = os.getenv("GPT_API_URL")
 
     if request.method == 'POST':
-        ingredientInput = request.POST.get('ingredientInput', '') 
+        ingredientInput = request.POST.get('ingredientInput', '')
 
     gpt_response = None  # 기본값 설정
     recommended_recipe_name = ""  # 추천된 요리 이름 기본값
@@ -224,33 +212,30 @@ def get_gpt_response(request):
             recommended_recipe_name = dish_name  # 추천된 요리 이름 저장
 
             inset_list_data = json.dumps(recipe_steps, ensure_ascii=False)
-            
+
             with mysql_rdb_conn() as conn:
                 with conn.cursor() as curs:
                     if settings.GLOBAL_NICKNAME != "게스트":
                         query = q.insert_list_recom()
                         if not query:  # SQL 쿼리가 None인지 체크
                             raise ValueError("q.insert_list_recom()이 None을 반환하고 있습니다.")
-                
-                        insert_data_into_users_list = (settings.GLOBAL_NICKNAME,recommended_recipe_name,inset_list_data)
+
+                        insert_data_into_users_list = (
+                        settings.GLOBAL_NICKNAME, recommended_recipe_name, inset_list_data)
 
                         print("Executing Query:", query)  # 디버깅 로그
                         print("Data:", insert_data_into_users_list)  # 디버깅 로그
-                        
-                        curs.execute(query,insert_data_into_users_list)
+
+                        curs.execute(query, insert_data_into_users_list)
                         conn.commit()
                     else:
                         messages.add_message(request, messages.ERROR, "게스트는 마이페이지 접속이 불가능합니다.")
 
         except json.JSONDecodeError:
             print("Error: GPT 응답을 JSON으로 변환하는 데 실패했습니다.")
-        except RequestException as e:
-            print(f"Error: OpenAI API 요청 실패 - {e}")
-        except DatabaseError as e:
-            print(f"Error: 데이터베이스 오류 발생 - {e}")
         except json.JSONDecodeError:
             dish_type = dish_name = recipe_steps = []
-            
+
     return render(request, "blog/result.html", {
         "ingredientInput": ingredientInput,
         "dish_type": dish_type,
@@ -266,24 +251,20 @@ def result_by_type(request):
     return render(request, "blog/home.html",)
 
 
-def ko_food(request):
+def ko_food(request,category):
     with connection.cursor() as cursor:
-        sql = q.select_ko_from_recipes()
-        cursor.execute(sql)
+        sql,params = q.select_ko_from_recipes(category)
+        cursor.execute(sql, params)
         results = cursor.fetchall()
+
+    # 데이터 가공 (튜플 데이터를 리스트의 딕셔너리로 변환)
     recipes = [
-        {"rec_id": row[0], "rec_name": row[1], "rec_descrip": row[2], "rec_detail": row[3], "rec_img": f"{row[4]}" if row[4] else None}
+        {"rec_id": row[0], "rec_name": row[1],
+         "rec_descrip": row[2], "rec_detail": row[3], "rec_img": f"{row[4]}" if row[4] else None}
         for row in results
     ]
 
-    return render(request, "blog/koreanfood.html", {"recipes": recipes})
-
-
-from django.shortcuts import render, get_object_or_404, redirect
-from django.contrib import messages
-from .models import Recipe
-# from .utils import mysql_rdb_conn
-from blog import query_sql as q
+    return render(request, "blog/koreanfood.html", {"recipes": recipes,  "category": category})
 
 
 def recipe_detail(request, rec_id=None):
@@ -345,3 +326,26 @@ def recipe_detail(request, rec_id=None):
     messages.error(request, "잘못된 요청입니다.")
     print("잘못된 요청입니다.")
     return redirect('main')
+
+def user_list_view(request):
+    with connection.cursor() as cursor:
+        # SQL 문 작성 (UserList 테이블의 모든 데이터를 가져오기)
+        sql = """
+            SELECT * FROM userlist
+        """
+        cursor.execute(sql)  # SQL 실행
+        results = cursor.fetchall()  # 결과 가져오기
+
+    # 데이터 가공 (튜플 데이터를 리스트의 딕셔너리로 변환)
+    users = [
+        {
+            "id": row[0],
+            "nickname": row[1],
+            "recom_rec_name": row[2],
+            "list": row[3],
+        }
+        for row in results
+    ]
+    print("users:", users)
+    # 데이터를 템플릿에 전달하고 렌더링
+    return render(request, 'blog/mypage.html', {'users': users})
