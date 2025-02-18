@@ -21,7 +21,7 @@ urlpatterns = [
 
     path('recommend',recommend ,name='recommend'),
     path("ko_food/<str:category>/", ko_food, name="ko_food"),
-    path("ko_food/", ko_food, {'category': 'Korean'}, name="ko_food_default"),  # 기본 경로 추가
+    # path("ko_food/", ko_food, {'category': 'Korean'}, name="ko_food_default"),  # 기본 경로 추가
     # path('ko_food',ko_food ,name='ko_food'),
     path('ja_food',ja_food ,name='ja_food'),
     path('ch_food',ch_food ,name='ch_food'),
@@ -31,6 +31,6 @@ urlpatterns = [
     path('chat/', get_gpt_response, name='chat_gpt'),
 
     path('result_by_type/',result_by_type,name="result_by_type"),
-    path('recipe/<int:rec_id>/', recipe_detail, name='recipe_detail'),
+    path('recipe_detail/<int:rec_id>/', recipe_detail, name='recipe_detail'),
     path('user_list/', user_list_view, name='user_list'),
 ]

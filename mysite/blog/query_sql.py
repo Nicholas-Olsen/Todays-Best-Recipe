@@ -103,7 +103,7 @@ def select_detail_by_id(): # 음식의 이름별로 음식 사진 조회
 #user_list 관련
 def insert_list_recom():
     sql="""
-    INSERT INTO users_list (nickname,recom_rec_name,list) VALUES (%s,%s,%s)
+    INSERT INTO userlist (nickname,recom_rec_name,list) VALUES (%s,%s,%s)
     """
     return sql
 

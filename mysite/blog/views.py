@@ -35,8 +35,8 @@ def main_view(request):
 def signup_view(request):
     return render(request,'blog/signup.html')
 
-def ko_food(request):
-    return render(request,'blog/koreanfood.html')
+# def ko_food(request):
+#     return render(request,'blog/koreanfood.html')
 
 def ja_food(request):
     return render(request,'blog/koreanfood.html')
@@ -267,7 +267,7 @@ def ko_food(request,category):
     return render(request, "blog/koreanfood.html", {"recipes": recipes,  "category": category})
 
 
-def recipe_detail(request, rec_id=None):
+def recipe_detail(request, rec_id):
     print(f"Received rec_id: {rec_id}")  # rec_id 확인
 
     if request.method == "POST":
@@ -298,6 +298,7 @@ def recipe_detail(request, rec_id=None):
 
                     curs.execute(q.select_detail_by_id(), (rec_id,))
                     rec_detail = curs.fetchone()
+
 
                     print(f"rec_name: {rec_name}, rec_descrip: {rec_descrip}, rec_img: {rec_img}, rec_detail: {rec_detail}")
 
