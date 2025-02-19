@@ -2,6 +2,8 @@ import pymysql
 import requests
 import os
 import json
+
+from django.contrib.auth.decorators import login_required
 from dotenv import load_dotenv
 import re
 from django.db import connection
@@ -169,7 +171,7 @@ def get_gpt_response(request):
     prompt = f"""
     사용자가 입력한 재료를 바탕으로 가장 적절한 요리 종류(한식, 중식, 일식, 양식 등)를 결정하고, 그에 맞는 요리를 추천해줘.
     그리고 추천된 요리의 레시피를 단계별로 출력해줘. 단계 수는 재료와 요리에 따라 달라질 수 있어. 
-    단계별로 사용하는 식재료의 개수 혹은 양은 가능한 구체적으로 말해줘.
+    단계별로 사용하는 식재료의 개수 혹은 양은 가능한 구체적으로 말해주고, '~다.' 로 끝나는 평서문으로 작성해줘.
 
     입력된 재료: {ingredientInput}
 
@@ -280,7 +282,7 @@ def recipe_detail(request, rec_id):
 
     if rec_id:
         try:
-            rec_id = int(rec_id)  
+            rec_id = int(rec_id)
 
             with mysql_rdb_conn() as conn:
                 with conn.cursor() as curs:
@@ -295,7 +297,7 @@ def recipe_detail(request, rec_id):
 
                     curs.execute(q.find_steps(), (rec_id,))
                     rec_detail = curs.fetchall()
-                    
+
                     curs.execute(q.find_number(), (rec_id,))
                     rec_number = curs.fetchone()
 
@@ -335,7 +337,7 @@ def user_list_view(request):
         sql = """
             SELECT * FROM userlist where nickname = %s
         """
-        cursor.execute(sql,(settings.GLOBAL_NICKNAME,))  # SQL 실행
+        cursor.execute(sql, (settings.GLOBAL_NICKNAME,))  # SQL 실행
         results = cursor.fetchall()  # 결과 가져오기
 
     # 데이터 가공 (튜플 데이터를 리스트의 딕셔너리로 변환)
@@ -351,3 +353,53 @@ def user_list_view(request):
     print("users:", users)
     # 데이터를 템플릿에 전달하고 렌더링
     return render(request, 'blog/mypage.html', {'users': users})
+
+import json
+from django.http import JsonResponse
+from django.db import connection
+
+def delete_selected_recipes(request):
+    if request.method == "POST":
+        try:
+            data = json.loads(request.body)  # JSON 파싱
+            selected_ids = data.get("selected_ids", [])
+
+            if not selected_ids:
+                return JsonResponse({"status": "error", "message": "삭제할 레시피를 선택하세요!"})
+
+            # 숫자로 변환 (잘못된 값 제거)
+            selected_ids = [int(id) for id in selected_ids if str(id).isdigit()]
+
+            if not selected_ids:
+                return JsonResponse({"status": "error", "message": "유효한 레시피 ID가 없습니다."})
+
+            with connection.cursor() as cursor:
+                format_strings = ','.join(['%s'] * len(selected_ids))
+                sql = f"DELETE FROM userlist WHERE id IN ({format_strings})"
+                cursor.execute(sql, selected_ids)
+
+            return JsonResponse({"status": "success", "message": "선택한 레시피 삭제 완료!"})
+
+        except json.JSONDecodeError:
+            return JsonResponse({"status": "error", "message": "잘못된 JSON 데이터"}, status=400)
+
+    return JsonResponse({"status": "error", "message": "잘못된 요청"}, status=400)
+
+
+def delete_all_recipes(request):
+    if request.method == "POST":
+        try:
+            data = json.loads(request.body)  # JSON 데이터 가져오기
+            if data.get("action") != "delete_all":  # action이 delete_all이 아닌 경우
+                return JsonResponse({"status": "error", "message": "잘못된 요청"}, status=400)
+
+            with connection.cursor() as cursor:
+                sql = """DELETE FROM userlist WHERE nickname = %s"""
+                cursor.execute(sql,settings.GLOBAL_NICKNAME)
+
+            return JsonResponse({"status": "success", "message": "전체 레시피 삭제 완료!"})
+
+        except json.JSONDecodeError:
+            return JsonResponse({"status": "error", "message": "잘못된 JSON 데이터"}, status=400)
+
+    return JsonResponse({"status": "error", "message": "잘못된 요청"}, status=400)
