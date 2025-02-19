@@ -1,3 +1,4 @@
+/* 기본 스타일 설정 */
 h1 {
     color: #4d567b;
     font-size: 3.2em;
@@ -5,9 +6,14 @@ h1 {
     font-weight: 400;
     margin-top: 40px;
     margin-left: 3%;
+    white-space: nowrap; 
 }
 
-/* 뒤로 가기 */
+.mypage-title {
+    color: #999db6;
+}
+
+/* 메인으로 버튼 */
 .back-button {
     position: absolute;
     top: 20px;
@@ -25,11 +31,84 @@ h1 {
     transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-.back-button:hover { background-color: #2a3478; color: white; }
+.back-button:hover {
+    background-color: #D7DDE8;
+    color: white;
+}
 
+/* 각 그리드 항목 */
+.category {
+    width: 260px;
+    height: 270px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: rgba(255, 255, 255, 1.0);
+    display: flex;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    z-index: 1;
+    text-align: center;
+    transition: height 0.3s ease-in-out, background-color 0.3s ease-in-out;
+}
 
-/* History Grid layout */
-.history-grid {
+/* 마우스 올렸을 때 */
+.category:hover {
+    height: 360px; 
+    background-color: #6a6f89;
+    color: white;
+}
+
+/* 클릭 시 확장 */
+.category.expanded {
+    height: 360px; 
+    background-color: rgba(255, 255, 255, 1.0);
+    color: #77778a;
+}
+
+/* 이미지 */
+.category img {
+    width: 240px;
+    height: 240px;
+    object-fit: cover; 
+    border-radius: 5px;
+    margin-bottom: 10px; 
+}
+
+/* 텍스트 */
+.category p {
+    color: #77778a;
+    font-size: 24px;
+    font-family: 'RoundMo', sans-serif;
+    margin-top: 10px;
+}
+
+/* 리스트 내용 - 기본 상태 */
+.category .list-content {
+    display: none;
+    font-size: 17px; 
+    color: #9d9eaf;  
+    margin-top: 10px;
+    padding: 10px;
+    font-family: 'RoundMo', sans-serif;
+    text-align: left;
+}
+
+/* 마우스 호버 */
+.category:hover .list-content,
+.category.expanded .list-content {
+    display: block;
+}
+
+/* 리스트 표시 영역 */
+.category .recipe-list {
+    display: block;
+}
+
+/* 격자 밖을 누르면 크기가 원래대로 */
+.user-list {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 20px;
@@ -38,108 +117,23 @@ h1 {
     padding: 0 20px;
     height: auto;
     overflow-y: auto;
+    position: relative;
+    background-color: rgb(192, 193, 197, 0.1); 
 }
 
-/* History Box for each dish */
-.history-box {
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    background-color: rgba(255, 255, 255, 1.0);
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 20px;
-    width: 100%;
-    max-width: 260px; /* Adjusted to fit in the grid */
-    margin: 0 auto;
-    text-align: center;
-}
-
-.history-box p {
-    color: #646476;
-    font-size: 18px;
-    font-family: 'RoundMo', sans-serif;
-    margin-top: 10px;
-}
-
-.history-box:hover {
-    background-color: #6a6f89;
-}
-
-.history-box:hover p {
-    color: white;
-}
-
-/* Pagination */
-.pagination {
-    display: flex;
-    justify-content: center;
-    margin-top: 30px;
-    gap: 20px;
-}
-
-.pagination a {
-    padding: 10px 20px;
-    background-color: #4d567b;
-    color: white;
-    text-decoration: none;
-    border-radius: 5px;
-    font-size: 16px;
-}
-
-.pagination a:hover {
-    background-color: #606a8a;
-}
-
-.prev-page {
-    background-color: #999;
-}
-
-.prev-page:hover {
-    background-color: #6a6f89;
-}
-
-.next-page {
-    background-color: #4d567b;
-}
-
-.next-page:hover {
-    background-color: #6a6f89;
-}
-
-/* 마이페이지에 있는 모달
-.modal {
-    display: none;
-    position: fixed;
-    z-index: 1000;
-    left: 0;
+.user-list:before {
+    content: "";
+    position: absolute;
     top: 0;
+    left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: rgba(0, 0, 0, 0.1);
+    z-index: -1;
 }
 
-.modal-content {
-    background-color: white;
-    padding: 30px;
-    border-radius: 10px;
-    text-align: center;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    height: 170px;
+.mypagelogo {
+    display: block;
+    margin: 30px auto 10px;  
+    width: 180px;
 }
-
-.modal button {
-    margin-top: 30px;
-    padding: 10px 20px;
-    background-color: #E57157;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 18px;
-    font-weight: bold;
-} */
