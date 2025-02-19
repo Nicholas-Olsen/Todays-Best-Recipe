@@ -268,22 +268,19 @@ def ko_food(request,category):
 
 
 def recipe_detail(request, rec_id):
-    print(f"Received rec_id: {rec_id}")  # rec_id 확인
-
     if request.method == "POST":
         rec_id = request.POST.get('rec_id')
         print(f"POST request received, rec_id: {rec_id}")  # POST 요청 확인
 
         if rec_id:
-            recipe = get_object_or_404(Recipe, rec_id=rec_id)
+            recipe = get_object_or_404("rec_id")
             return render(request, 'recipe_detail.html', {'recipe': recipe})
         else:
             return render(request, 'recipe_detail.html', {'error': '레시피 ID가 없습니다.'})
 
     if rec_id:
         try:
-            rec_id = int(rec_id)  # rec_id를 정수형으로 변환
-            print(f"Converted rec_id: {rec_id}")  # 변환된 rec_id 출력
+            rec_id = int(rec_id)  
 
             with mysql_rdb_conn() as conn:
                 with conn.cursor() as curs:
@@ -296,18 +293,22 @@ def recipe_detail(request, rec_id):
                     curs.execute(q.select_img_by_id(), (rec_id,))
                     rec_img = curs.fetchone()
 
-                    curs.execute(q.select_detail_by_id(), (rec_id,))
-                    rec_detail = curs.fetchone()
+                    curs.execute(q.find_steps(), (rec_id,))
+                    rec_detail = curs.fetchall()
+                    
+                    curs.execute(q.find_number(), (rec_id,))
+                    rec_number = curs.fetchone()
 
+                    rec_number = int(rec_number[0]) if rec_number else 0
 
-                    print(f"rec_name: {rec_name}, rec_descrip: {rec_descrip}, rec_img: {rec_img}, rec_detail: {rec_detail}")
+                    rec_detail_list = [row[0] for row in rec_detail] if rec_detail else ["상세 정보 없음"]
 
                     if rec_name:
                         return render(request, 'recipe_detail.html', {
                             'rec_name': rec_name[0] if rec_name else '정보 없음',
                             'rec_descrip': rec_descrip[0] if rec_descrip else '설명 없음',
                             'rec_img': rec_img[0] if rec_img else None,
-                            'rec_detail': rec_detail[0] if rec_detail else '상세 정보 없음'
+                            'rec_detail': rec_detail_list
                         })
                     else:
                         messages.error(request, "레시피를 찾을 수 없습니다.")
@@ -332,9 +333,9 @@ def user_list_view(request):
     with connection.cursor() as cursor:
         # SQL 문 작성 (UserList 테이블의 모든 데이터를 가져오기)
         sql = """
-            SELECT * FROM userlist
+            SELECT * FROM userlist where nickname = %s
         """
-        cursor.execute(sql)  # SQL 실행
+        cursor.execute(sql,(settings.GLOBAL_NICKNAME,))  # SQL 실행
         results = cursor.fetchall()  # 결과 가져오기
 
     # 데이터 가공 (튜플 데이터를 리스트의 딕셔너리로 변환)
