@@ -146,3 +146,10 @@ def select_ingredients_by_user():
     SELECT ing_id FROM user_ingredients WHERE user_id = %s
     """
     return sql
+
+
+def find_steps():
+    sql="""
+    select step_description from recipe_steps where rec_id = %s
+    """
+    return sql
