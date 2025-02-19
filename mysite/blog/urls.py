@@ -3,7 +3,7 @@ from blog.views import home_view, main_view, signup_view, ko_food, signup, login
 from blog.views import recommend, result, get_gpt_response, result_by_type
 from blog.views import get_gpt_response ,recipe_detail , guest_login  #mypage
 from . import views
-from blog.views import user_list_view
+from blog.views import user_list_view, delete_selected_recipes, delete_all_recipes
 
 urlpatterns = [
     path('',home_view ,name='home'),
@@ -33,4 +33,6 @@ urlpatterns = [
     path('result_by_type/',result_by_type,name="result_by_type"),
     path('recipe_detail/<int:rec_id>/', recipe_detail, name='recipe_detail'),
     path('user_list/', user_list_view, name='user_list'),
+    path('delete_selected/', delete_selected_recipes, name='delete_selected_recipes'),
+    path('delete_all/', delete_all_recipes, name='delete_all_recipes'),
 ]
