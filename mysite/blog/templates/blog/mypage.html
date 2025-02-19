@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>오늘의레시피: 마이페이지</title>
     <link rel="stylesheet" href="/static/css/style.css">
-    <link rel="stylesheet" href="/static/css/mypage.css"> 
+    <link rel="stylesheet" href="/static/css/mypage.css">
 </head>
 <body>
     <form action="{% url 'get_gpt_response' %}" method="POST">
@@ -21,14 +21,21 @@
 
         <a href="{% url 'main' %}">
             <img src="../../static/images/LogowithoutText.png" alt="로고1" class="mypagelogo">
-        </a> 
+        </a>
 
         <h1><span class="mypage-title">마이페이지</span> : 검색 기록</h1>
-    </form> 
+    </form>
+
+    <form id="deleteForm" method="POST">
+    {% csrf_token %}
+    <button type="button" id="deleteSelected" data-url="{% url 'delete_selected_recipes' %}">선택 삭제</button>
+    <button type="button" id="deleteAll" data-url="{% url 'delete_all_recipes' %}">전체 삭제</button>
+</form>
 
     <div class="user-list">
         {% for user in users %}
             <div class="user-card category" onclick="toggleHeight(this)">
+                <input type="checkbox" class="recipe-checkbox" value="{{ user.id }}">
                 <img src="{{ user.image_url }}" alt="recipe image">
                 <p> {{ user.recom_rec_name }}</p>
                 <div class="recipe-list">
@@ -50,7 +57,7 @@
                 // 다른 모든 요소가 확장되지 않도록 초기화
                 const allCategories = document.querySelectorAll('.category');
                 allCategories.forEach(cat => cat.classList.remove('expanded'));
-                
+
                 // 클릭한 요소만 확장
                 element.classList.add('expanded');
             }
@@ -64,7 +71,7 @@
             }
         });
     </script>
-
+    <script src="../static/js/delete.js"></script>
     <div class="container">
         <div class="belt belt1"></div>
         <div class="belt belt2 reverse"></div>
