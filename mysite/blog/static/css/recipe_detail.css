@@ -9,31 +9,39 @@ body {
 
 /* 뒤로가기 버튼 */
 .back-button {
-    display: inline-block;
-    margin: 20px;
-    padding: 10px 20px;
-    background-color: #ff6b6b;
-    color: white;
+    position: absolute;
+    top: 10%;
+    left: 20%;
+    background-color: #f4f4f7;
+    color: #2a3478;
+    border: 1px solid #ccc;
+    padding: 15px 22px;
+    border-radius: 20px;
+    font-family: 'RoundMo', sans-serif;
+    cursor: pointer;
+    font-size: 25px;
     text-decoration: none;
-    border-radius: 5px;
-    font-weight: bold;
-    transition: background 0.3s;
+    display: inline-block;
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .back-button:hover {
-    background-color: #e63946;
+    background-color: #D7DDE8;
+    color: white;
 }
 
 /* 레시피 제목 */
 h1 {
-    color: #333;
-    font-size: 2em;
-    margin-bottom: 10px;
+    color: #4d567b;
+    font-size: 2.6em;
+    font-family: 'BitBit', sans-serif;
+    font-weight: 400;
+    margin-top: 40px;
+    text-align: center;
 }
-
 /* 레시피 컨테이너 */
 .recipe-container {
-    max-width: 600px;
+    max-width: 800px;
     background: white;
     padding: 20px;
     margin: 20px auto;
@@ -51,12 +59,29 @@ h1 {
 }
 
 /* 설명 및 상세 레시피 */
-p {
-    font-size: 1.1em;
-    color: #555;
-    line-height: 1.5;
-    margin-bottom: 10px;
+h2 {
+    color: #646476;
+    font-size: 24px;
+    font-family: 'RoundMo', sans-serif;
+    margin-top: 10px;
 }
+
+p { 
+    color: #8f8f8f;
+    font-size: 20px;
+    font-weight: 400;
+    font-family: 'RoundMo', sans-serif;
+    margin-top: 10px;
+}
+
+h3 { 
+    color: #a8a8a8;
+    font-size: 22px;
+    font-weight: 400;
+    font-family: 'RoundMo', sans-serif;
+    margin-top: 10px;
+}
+
 
 /* 벨트 애니메이션 (추가 요소 스타일링) */
 .container {
@@ -65,4 +90,3 @@ p {
     justify-content: center;
     gap: 10px;
 }
- 모달의 배경
