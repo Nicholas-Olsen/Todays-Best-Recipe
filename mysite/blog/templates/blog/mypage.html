@@ -5,21 +5,65 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>오늘의레시피: 마이페이지</title>
     <link rel="stylesheet" href="/static/css/style.css">
-    <link rel="stylesheet" href="/static/css/recommend.css">
+    <link rel="stylesheet" href="/static/css/mypage.css"> 
 </head>
 <body>
+    <form action="{% url 'get_gpt_response' %}" method="POST">
+        {% csrf_token %}
+        <!-- 메인으로 버튼 -->
+        <a href="{% url 'main' %}" class="back-button">메인으로</a>
 
-   <div class="user-list">
+        <!-- 마이페이지 라벨 -->
+        <a href="{% url 'user_list' %}" id ="mylabel_link" class="mylabel">
+            {{ GLOBAL_NICKNAME }} 님
+            <img src="../../static/images/myicon.png" alt="아이콘" class="mylabel-icon">
+        </a>
+
+        <a href="{% url 'main' %}">
+            <img src="../../static/images/LogowithoutText.png" alt="로고1" class="mypagelogo">
+        </a> 
+
+        <h1><span class="mypage-title">마이페이지</span> : 검색 기록</h1>
+    </form> 
+
+    <div class="user-list">
         {% for user in users %}
-            <div class="user-card">
-                <p><strong>닉네임:</strong> {{ user.nickname }}</p>
-                <p><strong>추천 레시피:</strong> {{ user.recom_rec_name }}</p>
-                <p><strong>리스트:</strong> {{ user.list }}</p>
+            <div class="user-card category" onclick="toggleHeight(this)">
+                <img src="{{ user.image_url }}" alt="recipe image">
+                <p> {{ user.recom_rec_name }}</p>
+                <div class="recipe-list">
+                    <p class="list-content">{{ user.list }}</p>
+                </div>
             </div>
         {% empty %}
             <p>추천 레시피가 없습니다.</p>
         {% endfor %}
     </div>
+
+    <script>
+       // 클릭 시 높이 조절 및 리스트 표시
+        function toggleHeight(element) {
+            // 클릭한 요소가 이미 확장된 상태라면, 되돌려준다
+            if (element.classList.contains("expanded")) {
+                element.classList.remove("expanded");
+            } else {
+                // 다른 모든 요소가 확장되지 않도록 초기화
+                const allCategories = document.querySelectorAll('.category');
+                allCategories.forEach(cat => cat.classList.remove('expanded'));
+                
+                // 클릭한 요소만 확장
+                element.classList.add('expanded');
+            }
+        }
+
+        // 배경 클릭 시 모든 격자의 높이를 원래대로 되돌리기
+        document.addEventListener('click', function(event) {
+            if (!event.target.closest('.category')) {
+                const allCategories = document.querySelectorAll('.category');
+                allCategories.forEach(cat => cat.classList.remove('expanded'));
+            }
+        });
+    </script>
 
     <div class="container">
         <div class="belt belt1"></div>
