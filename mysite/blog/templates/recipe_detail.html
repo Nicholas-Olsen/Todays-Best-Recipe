@@ -23,9 +23,11 @@
         {% else %}
             <p>이미지 없음</p>
         {% endif %}
-        <p><strong>설명:</strong> {{ rec_descrip }}</p>
-        <h2>상세 레시피</h2>
-        <p>{{ rec_detail }}</p>
+        <h3> {{ rec_descrip }}</h3>
+        <h2>레시피</h2>
+            {% for step in rec_detail %}
+                <p>{{ forloop.counter }}. {{ step }}</p>
+            {% endfor %}
     </div>
 
     <div class="container">
