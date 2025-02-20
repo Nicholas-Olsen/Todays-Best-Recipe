@@ -4,38 +4,48 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>오늘의 레시피: 추천결과</title>
-    <link rel="stylesheet" href="../static/css/result.css">
     <link rel="stylesheet" href="../../static/css/style.css">
+    <link rel="stylesheet" href="../static/css/result.css">
 </head>
 <body>
-    <a href="{% url 'recommend' %}" class="again-button">다시 입력</a>
-    <!-- 마이페이지 라벨 -->
-    <a href="{% url 'user_list' %}" id ="mylabel_link" class="mylabel">
-        {{ GLOBAL_NICKNAME }} 님
+    <header>
+        <a href="{% url 'recommend' %}" class="again-button">다시 입력</a>
+        <a href="{% url 'user_list' %}" id="mylabel_link" class="mylabel">
+            {{ GLOBAL_NICKNAME }} 님
             <img src="../../static/images/myicon.png" alt="아이콘" class="mylabel-icon">
-    </a>
-    <a href="{% url 'main' %}">
-        <img src="../../static/images/LogowithoutText.png"alt="로고1" class="pagelogo">
-    </a> 
-    <h1>오늘의 레시피 추천</h1>
-    <form action="{% url 'main' %}" method="POST">    
-        {% csrf_token %}
-        <div class="result-box">
-            {% if dish_name %}
-                <h2><span class="bullet">●</span>추천 요리 : <span class="response-text"><h2>{{ dish_name }}</h2></span></h2>
-                <h2><span class="bullet">●</span>요리 종류 : <span class="response-text"><h2>{{ dish_type }}</h2></span></h2>
-                <h2><span class="bullet">●</span>레시피 단계</h2>
-                <ol>
-                    {% for step in recipe_steps %}
-                        <li>{{ step }}</li>
-                    {% endfor %}
-                </ol>
-            {% else %}
-                <p class="error-message">추천 결과를 가져오는 데 실패했습니다.</p>
-            {% endif %}
-            <button type="submit" class="finish-btn">종료</button>
-        </div>
-    </form>
+        </a>
+        <a href="{% url 'main' %}" class="logo_img">
+            <img src="../../static/images/LogowithoutText.png" alt="로고" class="pagelogo">
+        </a>
+    </header>
+
+    <main>
+        <h1>오늘의 레시피 추천</h1>
+        <h2>{{ dish_name }} ({{ dish_type }})</h2>
+
+        <form action="{% url 'main' %}" method="POST">
+            {% csrf_token %}
+            <div class="result-box">
+                {% if dish_name %}
+                    <img src="../static/img/한식/koreanfood1.jpg" alt="추천 요리 이미지">
+
+                    <div class="recipe_step">
+                        <h2>◎  레시피 단계  ◎</h2>
+                    </div>
+
+                    <ol>
+                        {% for step in recipe_steps %}
+                            <li>{{ step }}</li>
+                        {% endfor %}
+                    </ol>
+                {% else %}
+                    <p class="error-message">추천 결과를 가져오는 데 실패했습니다.</p>
+                {% endif %}
+
+                <button type="submit" class="finish-btn">종료</button>
+            </div>
+        </form>
+    </main>
 
     <div id="error-modal" class="guest-modal" style="display: none;">
         <div class="guest-modal-content">
@@ -43,23 +53,24 @@
             <span class="guest-modal-btn" onclick="closeModal()">확인</span>
         </div>
     </div>
+
     <script>
         document.getElementById("mylabel_link").addEventListener("click", function(event) {
-             if ("{{ GLOBAL_NICKNAME }}" === "게스트") {
-                event.preventDefault();  
-                showModal();  
+            if ("{{ GLOBAL_NICKNAME }}" === "게스트") {
+                event.preventDefault();
+                showModal();
             }
         });
-        
+
         function showModal() {
             document.getElementById("error-modal").style.display = "block";
         }
-        
+
         function closeModal() {
             document.getElementById("error-modal").style.display = "none";
         }
-        
-    </script>  
+    </script>
+
     <div class="container">
         <div class="belt belt1"></div>
         <div class="belt belt2 reverse"></div>
