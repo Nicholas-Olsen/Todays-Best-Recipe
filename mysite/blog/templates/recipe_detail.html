@@ -8,34 +8,43 @@
     <link rel="stylesheet" href="../../static/css/recipe_detail.css">
 </head>
 <body>
-    <a href="{% url 'main' %}" class="back-button">메인으로</a>
-
-    {% if error %}
-        <div class="error-message">
-            <p>{{ error }}</p>
-        </div>
-    {% endif %}
-
-    <h1>{{ rec_name }}</h1>
-    <div class="recipe-container">
-        {% if rec_img %}
-            <img src="{{ rec_img }}" alt="{{ rec_name }}" class="recipe-detail-image">
+    <header>
+        <a href="{% url 'main' %}" class="back-button" style="position: absolute; left: 10px;">메인으로</a>
+    </header>
+    <main class="recipe-wrapper" style="overflow-x: auto;">
+        {% if error %}
+            <div class="error-message">
+                <p>{{ error }}</p>
+            </div>
         {% else %}
-            <p>이미지 없음</p>
+            <h1>{{ rec_name }}</h1>
+            <div class="recipe-container">
+                {% if rec_img %}
+                    <div class="image-container">
+                        <img src="{{ rec_img }}" alt="{{ rec_name }}" class="recipe-detail-image">
+                    </div>
+                {% else %}
+                    <p>이미지 없음</p>
+                {% endif %}
+                <div class="recipe-content">
+                    <h3>{{ rec_descrip }}</h3>
+                    <h2>레시피</h2>
+                    <div class="recipe-steps">
+                        {% for step in rec_detail %}
+                            <p>{{ forloop.counter }}. {{ step }}</p>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
         {% endif %}
-        <h3> {{ rec_descrip }}</h3>
-        <h2>레시피</h2>
-            {% for step in rec_detail %}
-                <p>{{ forloop.counter }}. {{ step }}</p>
-            {% endfor %}
-    </div>
+    </main>
 
-    <div class="container">
+    <footer class="animation-container">
         <div class="belt belt1"></div>
         <div class="belt belt2 reverse"></div>
         <div class="belt belt3"></div>
         <div class="belt belt4 reverse"></div>
         <div class="belt belt5"></div>
-    </div>
+    </footer>
 </body>
 </html>
