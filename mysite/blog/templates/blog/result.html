@@ -10,7 +10,7 @@
 <body>
     <a href="{% url 'recommend' %}" class="again-button">다시 입력</a>
     <!-- 마이페이지 라벨 -->
-    <a href="{% url 'mypage' %}" class="mylabel">
+    <a href="{% url 'user_list' %}" id ="mylabel_link" class="mylabel">
         {{ GLOBAL_NICKNAME }} 님
             <img src="../../static/images/myicon.png" alt="아이콘" class="mylabel-icon">
     </a>
@@ -37,6 +37,29 @@
         </div>
     </form>
 
+    <div id="error-modal" class="guest-modal" style="display: none;">
+        <div class="guest-modal-content">
+            <p>게스트는 마이페이지에<br>접근할 수 없습니다.</p>
+            <span class="guest-modal-btn" onclick="closeModal()">확인</span>
+        </div>
+    </div>
+    <script>
+        document.getElementById("mylabel_link").addEventListener("click", function(event) {
+             if ("{{ GLOBAL_NICKNAME }}" === "게스트") {
+                event.preventDefault();  
+                showModal();  
+            }
+        });
+        
+        function showModal() {
+            document.getElementById("error-modal").style.display = "block";
+        }
+        
+        function closeModal() {
+            document.getElementById("error-modal").style.display = "none";
+        }
+        
+    </script>  
     <div class="container">
         <div class="belt belt1"></div>
         <div class="belt belt2 reverse"></div>
