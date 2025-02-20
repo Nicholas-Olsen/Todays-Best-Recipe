@@ -1,36 +1,43 @@
-/* 기본 스타일 */
 body {
     font-family: 'Arial', sans-serif;
     margin: 0;
     padding: 0;
     background-color: #f8f8f8;
     text-align: center;
+    min-height: 120vh;
+    display: flex;
+    flex-direction: column;
+    overflow-x: hidden;
 }
-
-/* 뒤로가기 버튼 */
+.recipe-wrapper {
+    flex: 1;
+    overflow-x: auto;
+    padding-bottom: 20px;
+    max-width: 1200px;
+    margin-top: 3%;
+}
 .back-button {
     position: absolute;
-    top: 10%;
-    left: 20%;
+    top: 20px;
+    left: 20px;
     background-color: #f4f4f7;
+    cursor:pointer;
     color: #2a3478;
     border: 1px solid #ccc;
-    padding: 15px 22px;
-    border-radius: 20px;
     font-family: 'RoundMo', sans-serif;
-    cursor: pointer;
-    font-size: 25px;
+    padding: 12px 18px;
+    font-size: 20px;
+    border-radius: 15px;
     text-decoration: none;
     display: inline-block;
     transition: background-color 0.3s ease, color 0.3s ease;
+    margin-top: 3%;
+    margin-left: 10%;
 }
-
 .back-button:hover {
     background-color: #D7DDE8;
     color: white;
 }
-
-/* 레시피 제목 */
 h1 {
     color: #4d567b;
     font-size: 2.6em;
@@ -39,7 +46,6 @@ h1 {
     margin-top: 40px;
     text-align: center;
 }
-/* 레시피 컨테이너 */
 .recipe-container {
     max-width: 800px;
     background: white;
@@ -48,8 +54,6 @@ h1 {
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
-
-/* 레시피 이미지 */
 .recipe-detail-image {
     width: 100%;
     max-height: 300px;
@@ -57,34 +61,28 @@ h1 {
     border-radius: 10px;
     margin-bottom: 15px;
 }
-
-/* 설명 및 상세 레시피 */
 h2 {
     color: #646476;
     font-size: 24px;
     font-family: 'RoundMo', sans-serif;
     margin-top: 10px;
 }
-
-p { 
+p {
     color: #8f8f8f;
     font-size: 20px;
     font-weight: 400;
     font-family: 'RoundMo', sans-serif;
     margin-top: 10px;
+    text-align: left;
 }
-
-h3 { 
+h3 {
     color: #a8a8a8;
     font-size: 22px;
     font-weight: 400;
     font-family: 'RoundMo', sans-serif;
     margin-top: 10px;
 }
-
-
-/* 벨트 애니메이션 (추가 요소 스타일링) */
-.container {
+.animation-container {
     margin-top: 30px;
     display: flex;
     justify-content: center;
