@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>오늘의레시피: 마이페이지</title>
     <link rel="stylesheet" href="/static/css/style.css">
-    <link rel="stylesheet" href="/static/css/mypage.css">
+    <link rel="stylesheet" href="/static/css/mypage.css"> 
 </head>
 <body>
     <form action="{% url 'get_gpt_response' %}" method="POST">
@@ -21,57 +21,144 @@
 
         <a href="{% url 'main' %}">
             <img src="../../static/images/LogowithoutText.png" alt="로고1" class="mypagelogo">
-        </a>
+        </a> 
 
         <h1><span class="mypage-title">마이페이지</span> : 검색 기록</h1>
-    </form>
+    </form> 
 
     <form id="deleteForm" method="POST">
-    {% csrf_token %}
-    <button type="button" id="deleteSelected" data-url="{% url 'delete_selected_recipes' %}">선택 삭제</button>
-    <button type="button" id="deleteAll" data-url="{% url 'delete_all_recipes' %}">전체 삭제</button>
-</form>
+        {% csrf_token %}
+        <button type="button" id="deleteSelected" data-url="{% url 'delete_selected_recipes' %}">선택 삭제</button>
+        <button type="button" id="deleteAll" data-url="{% url 'delete_all_recipes' %}">전체 삭제</button>
+    </form>
 
     <div class="user-list">
         {% for user in users %}
-            <div class="user-card category" onclick="toggleHeight(this)">
-                <input type="checkbox" class="recipe-checkbox" value="{{ user.id }}">
+            <div class="user-card category" onclick="openModal('{{ user.recom_rec_name }}', '{{ user.list }}', event)">
+                <input type="checkbox" class="recipe-checkbox" value="{{ user.id }}" onclick="checkboxClicked(event)">
                 <img src="{{ user.image_url }}" alt="recipe image">
-                <p> {{ user.recom_rec_name }}</p>
-                <div class="recipe-list">
-                    <p class="list-content">{{ user.list }}</p>
-                </div>
+                <h4> {{ user.recom_rec_name }}</h4>
             </div>
         {% empty %}
-            <p>추천 레시피가 없습니다.</p>
+            <p class="error-message">검색 기록이 없습니다.</p>
         {% endfor %}
+    </div>
+    
+
+    <!-- 모달 창 -->
+    <div id="recipe-modal" class="recipe-modal">
+        <div id="recipe-modal-background" class="recipe-modal-background" onclick="closeModal()"></div>
+        <div class="recipe-modal-content">
+            <!-- 레시피 이름 -->
+            <h2 id="modal-recipe-name"></h2>
+
+            <!-- 이미지 자리 -->
+            <img id="modal-recipe-image" class="recipe-modal-image" src="" alt="Recipe Image" style="display: none;" />
+            <!-- 레시피 리스트 -->
+            <div id="modal-recipe-list"></div>
+
+            <!-- 닫기 버튼 -->
+            <button onclick="closeModal()">닫기</button>
+        </div>
     </div>
 
     <script>
-       // 클릭 시 높이 조절 및 리스트 표시
-        function toggleHeight(element) {
-            // 클릭한 요소가 이미 확장된 상태라면, 되돌려준다
-            if (element.classList.contains("expanded")) {
-                element.classList.remove("expanded");
-            } else {
-                // 다른 모든 요소가 확장되지 않도록 초기화
-                const allCategories = document.querySelectorAll('.category');
-                allCategories.forEach(cat => cat.classList.remove('expanded'));
 
-                // 클릭한 요소만 확장
-                element.classList.add('expanded');
-            }
-        }
-
-        // 배경 클릭 시 모든 격자의 높이를 원래대로 되돌리기
-        document.addEventListener('click', function(event) {
-            if (!event.target.closest('.category')) {
-                const allCategories = document.querySelectorAll('.category');
-                allCategories.forEach(cat => cat.classList.remove('expanded'));
+    // 텍스트 포맷팅 함수
+    function formatText(element) {
+        const text = element.textContent.trim();
+    
+        // 텍스트를 마침표 기준으로 나누고, 각 문장을 <p> 태그로 감싸기
+        let sentences = text.split('.').map(sentence => 
+            sentence.replace(/", "/g, '').replace(/"/g, '').replace(/[,\[\]]/g, '').trim()
+        ).filter(sentence => sentence !== '');
+    
+        // 기존 내용을 지운 후, 새로운 <p> 태그로 채움
+        element.innerHTML = '';
+    
+        sentences.forEach(sentence => {
+            if (sentence) { // 빈 문자열이 아닐 때만 추가
+                const paragraph = document.createElement('p');
+                paragraph.textContent = sentence + '.'; 
+                element.appendChild(paragraph);
             }
         });
+    }
+    
+    /* function formatText(element) {
+        const text = element.textContent.trim();
+
+        // 텍스트를 마침표 기준으로 나누고, 각 문장을 <p> 태그로 감쌈
+        let sentences = text.split('.'); 
+        sentences = sentences.map(sentence => sentence.replace(/", "/g, '').trim());
+        sentences = sentences.map(sentence => sentence.replace(/"/g, '').trim());
+        sentences = sentences.map(sentence => sentence.replace(/[,\[\]]/g, '').trim());
+
+        sentences = sentences.filter(sentence => sentence.trim() !== '');
+
+        // 기존 내용을 지운 후, 새로운 <p> 태그로 채움
+        element.innerHTML = '';
+
+        sentences.forEach(function(sentence) {
+            const paragraph = document.createElement('p');
+            paragraph.textContent = sentence + '.'; 
+            element.appendChild(paragraph);
+        });
+    }
+    */
+
+    // 모달 열기
+    function openModal(recipeName, recipeList, event) {
+        // event가 존재하지 않으면 return
+        if (!event) {
+            return;
+        }
+
+        // 체크박스를 클릭한 경우에는 모달을 열지 않음
+        if (event.target.type === 'checkbox') {
+            return;
+        }
+
+        // 모달 열기
+        document.getElementById('modal-recipe-name').textContent = recipeName;
+        document.getElementById('modal-recipe-list').textContent = recipeList;
+
+        const imageElement = document.getElementById('modal-recipe-image');
+        if (event.target.closest('.user-card').querySelector('img').src) {
+            imageElement.src = event.target.closest('.user-card').querySelector('img').src;
+            imageElement.style.display = 'block';
+        } else {
+            imageElement.style.display = 'none';
+        }
+
+        // 텍스트 포맷팅을 적용
+        formatText(document.getElementById('modal-recipe-list'));
+
+
+        // 모달과 배경 표시
+        document.getElementById('recipe-modal').style.display = 'block';
+        document.getElementById('recipe-modal-background').style.display = 'block';
+    }
+
+    // 모달 닫기
+    function closeModal() {
+        document.getElementById('recipe-modal').style.display = 'none';
+        document.getElementById('recipe-modal-background').style.display = 'none';
+    }
+
+    // 모달 배경 클릭 시 닫기
+    document.getElementById('recipe-modal-background').addEventListener('click', closeModal);
+
+    
+    // 체크박스를 클릭할 때 이벤트 전파를 막음
+    function checkboxClicked(event) {
+        event.stopPropagation();
+    }
+
+
     </script>
     <script src="../static/js/delete.js"></script>
+
     <div class="container">
         <div class="belt belt1"></div>
         <div class="belt belt2 reverse"></div>
