@@ -124,14 +124,13 @@ h1 {
     color: white;
     border-radius: 10px;
     cursor: pointer;
-    font-size: 18px;
+    font-size: 20px;
     font-family: 'RoundMo', sans-serif;
     font-weight: bold;
     text-decoration: none;
     text-align: center;
     transition: background-color 0.3s ease;
 }
-
 
 .guest-btn:hover {
     background-color: #4d5ab3;
@@ -157,9 +156,11 @@ h1 {
     position: absolute;
     top: 50%;
     left: 50%;
+    color:#5d5d5e;
     transform: translate(-50%, -50%);
     width: 300px;
-    font-weight: bold;
+    font-family: 'RoundMo', sans-serif;
+    font-weight: normal;
 }
 
 .modal button {
@@ -168,11 +169,18 @@ h1 {
     background-color: #E57157;
     color: white;
     border: none;
-    border-radius: 5px;
+    border-radius: 8px;
     cursor: pointer;
     font-size: 20px;
-    font-weight: bold;
+    font-family: 'RoundMo', sans-serif;
+    font-weight: normal;
 }
+
+.modal button:hover {
+    background-color: #f15d3e;
+    color: #ffe3e2;
+}
+
 .homelogo {
     display: block;
     margin-top: 30px auto; 

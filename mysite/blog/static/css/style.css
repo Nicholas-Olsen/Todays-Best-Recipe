@@ -6,7 +6,7 @@ body {
 .pagelogo {
     display: block;
     margin-top: 30px auto;
-    margin-left: 10%; 
+    margin-left: 8%; 
     margin-bottom: 10px auto;
     width: 180px; 
 }
@@ -164,4 +164,55 @@ body {
     font-weight: 400;
     border-radius: 5px;
     white-space: nowrap;
+}
+
+.guest-modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.4);
+}
+.guest-modal-content {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 300px;
+    color:#5d5d5e;
+    font-size: 21px;
+    font-family: 'RoundMo', sans-serif;
+    font-weight: normal;
+}
+
+.guest-modal-content p {
+    margin-bottom: 30px; 
+    margin-top: 20px;
+    line-height: 1.5;
+}
+
+.guest-modal-btn {
+    margin-top: 40px;
+    margin-bottom: 20px;
+    padding: 10px 20px;
+    background-color: #E57157;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 20px;
+    font-family: 'RoundMo', sans-serif;
+    font-weight: normal;
+}
+
+.guest-modal-btn:hover {
+    background-color: #f15d3e;
+    color: #ffe3e2;
 }

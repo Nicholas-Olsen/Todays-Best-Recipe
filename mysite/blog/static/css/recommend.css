@@ -94,36 +94,53 @@ form {
     font-weight: normal;
 }
 
-/* 모달 창 */
-.modal {
-    display: none;
+/* 재료 부족할경우 모달 창 */
+.warningModal {
+    display: none;  
     position: fixed;
     z-index: 1000;
     left: 0;
     top: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: rgba(0, 0, 0, 0.4);
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
-.modal-content {
+
+.warningModal .modal-content {
     background-color: white;
-    padding: 30px;
+    padding: 20px;
     border-radius: 10px;
     text-align: center;
-    position: absolute;
+    position: relative;
+    color: #5d5d5e;
+    font-family: 'RoundMo', sans-serif;
+    font-size: 20px;
+    font-weight: 400;
+    width: 350px;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    height: 170px;
 }
-.modal button {
-    margin-top: 30px;
+.warningModal .modal-content p {
+    margin-bottom: 30px; 
+}
+
+.warningModal button {
+    margin-top: 20px;
     padding: 10px 20px;
     background-color: #E57157;
     color: white;
     border: none;
-    border-radius: 5px;
+    border-radius: 8px;
     cursor: pointer;
-    font-size: 18px;
-    font-weight: bold;
+    font-family: 'RoundMo', sans-serif;
+    font-size: 20px;
+    font-weight: 400;
+}
+.warningModal button:hover {
+    background-color: #f15d3e;
+    color: #ffe3e2;
 }
