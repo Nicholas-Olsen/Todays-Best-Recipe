@@ -155,6 +155,96 @@ def guest_login(request):
     return render(request,'home')
 
 
+# def get_gpt_response(request):
+#     load_dotenv()
+
+#     GPT_API_KEY = os.getenv("GPT_API_KEY")
+#     GPT_API_URL = os.getenv("GPT_API_URL")
+
+#     if request.method == 'POST':
+#         ingredientInput = request.POST.get('ingredientInput', '')
+
+#     gpt_response = None  # 기본값 설정
+#     recommended_recipe_name = ""  # 추천된 요리 이름 기본값
+#     dish_type, dish_name, recipe_steps = "", "", []  # 기본값 설정
+
+#     prompt = f"""
+#     사용자가 입력한 재료를 바탕으로 가장 적절한 요리 종류(한식, 중식, 일식, 양식 등)를 결정하고, 그에 맞는 요리를 추천해줘.
+#     그리고 추천된 요리의 레시피를 단계별로 출력해줘. 단계 수는 재료와 요리에 따라 달라질 수 있어. 
+#     단계별로 사용하는 식재료의 개수 혹은 양은 가능한 구체적으로 말해주고, '~다.' 로 끝나는 평서문으로 작성해줘.
+
+#     입력된 재료: {ingredientInput}
+
+#     출력 형식:
+#     {{
+#         "dish_type": "[한식, 중식, 일식, 양식, 디저트 중 하나]",
+#         "dish_name": "[요리 이름]",
+#         "recipe_steps": [
+#             "1. 첫번째 단계",
+#             "2. 두번째 단계",
+#             "3. 세번째 단계",
+#             ...
+#         ]
+#     }}
+#     """
+#     if request.method == "POST":
+#         headers = {
+#             "Authorization": f"Bearer {GPT_API_KEY}",
+#             "Content-Type": "application/json",
+#         }
+#         data = {
+#             "model": "gpt-3.5-turbo",
+#             "messages": [{"role": "user", "content": prompt}],
+#             "max_tokens": 300,
+#         }
+
+#         response = requests.post(GPT_API_URL, headers=headers, json=data)
+#         response.raise_for_status()  # 오류 발생 시 예외 발생
+#         gpt_response = response.json()["choices"][0]["message"]["content"].strip()
+
+#         # 응답을 JSON 형식으로 파싱
+#         try:
+#             parsed_response = json.loads(gpt_response)
+#             dish_type = parsed_response.get("dish_type", "")
+#             dish_name = parsed_response.get("dish_name", "")
+#             recipe_steps = parsed_response.get("recipe_steps", [])
+
+#             # 숫자 글머리 제거
+#             recipe_steps = [re.sub(r'^\d+\.\s*', '', step) for step in recipe_steps]
+#             recommended_recipe_name = dish_name  # 추천된 요리 이름 저장
+
+#             inset_list_data = json.dumps(recipe_steps, ensure_ascii=False)
+
+#             with mysql_rdb_conn() as conn:
+#                 with conn.cursor() as curs:
+#                     if settings.GLOBAL_NICKNAME != "게스트":
+#                         query = q.insert_list_recom()
+#                         if not query:  # SQL 쿼리가 None인지 체크
+#                             raise ValueError("q.insert_list_recom()이 None을 반환하고 있습니다.")
+
+#                         insert_data_into_users_list = (
+#                         settings.GLOBAL_NICKNAME, recommended_recipe_name, inset_list_data)
+
+#                         print("Executing Query:", query)  # 디버깅 로그
+#                         print("Data:", insert_data_into_users_list)  # 디버깅 로그
+
+#                         curs.execute(query, insert_data_into_users_list)
+#                         conn.commit()
+#                     else:
+#                         messages.add_message(request, messages.ERROR, "게스트는 마이페이지 접속이 불가능합니다.")
+
+#         except json.JSONDecodeError:
+#             print("Error: GPT 응답을 JSON으로 변환하는 데 실패했습니다.")
+#         except json.JSONDecodeError:
+#             dish_type = dish_name = recipe_steps = []
+
+#     return render(request, "blog/result.html", {
+#         "ingredientInput": ingredientInput,
+#         "dish_type": dish_type,
+#         "dish_name": dish_name,
+#         "recipe_steps": recipe_steps
+#     })
+
 def get_gpt_response(request):
     load_dotenv()
 
@@ -162,12 +252,14 @@ def get_gpt_response(request):
     GPT_API_URL = os.getenv("GPT_API_URL")
 
     if request.method == 'POST':
-        ingredientInput = request.POST.get('ingredientInput', '')
+        ingredientInput = request.POST.get('ingredientInput', '') or ""
 
-    gpt_response = None  # 기본값 설정
-    recommended_recipe_name = ""  # 추천된 요리 이름 기본값
-    dish_type, dish_name, recipe_steps = "", "", []  # 기본값 설정
+    # ✅ 기본값 설정
+    gpt_response = None
+    recommended_recipe_name = ""
+    dish_type, dish_name, recipe_steps, image_url = "", "", [], None  
 
+    # 🔹 GPT 프롬프트 정의
     prompt = f"""
     사용자가 입력한 재료를 바탕으로 가장 적절한 요리 종류(한식, 중식, 일식, 양식 등)를 결정하고, 그에 맞는 요리를 추천해줘.
     그리고 추천된 요리의 레시피를 단계별로 출력해줘. 단계 수는 재료와 요리에 따라 달라질 수 있어. 
@@ -177,7 +269,7 @@ def get_gpt_response(request):
 
     출력 형식:
     {{
-        "dish_type": "[한식, 중식, 일식, 양식, 디저트 중 하나]",
+        "dish_type": "[한식, 중식, 일식, 양식 중 하나]",
         "dish_name": "[요리 이름]",
         "recipe_steps": [
             "1. 첫번째 단계",
@@ -187,6 +279,7 @@ def get_gpt_response(request):
         ]
     }}
     """
+
     if request.method == "POST":
         headers = {
             "Authorization": f"Bearer {GPT_API_KEY}",
@@ -198,53 +291,92 @@ def get_gpt_response(request):
             "max_tokens": 300,
         }
 
-        response = requests.post(GPT_API_URL, headers=headers, json=data)
-        response.raise_for_status()  # 오류 발생 시 예외 발생
-        gpt_response = response.json()["choices"][0]["message"]["content"].strip()
-
-        # 응답을 JSON 형식으로 파싱
         try:
+            response = requests.post(GPT_API_URL, headers=headers, json=data)
+            response.raise_for_status()  
+            gpt_response = response.json()["choices"][0]["message"]["content"].strip()
+
+            print("🔹 GPT 응답 원본:", response.text)  # 디버깅용
+
+            # ✅ JSON 응답 파싱
             parsed_response = json.loads(gpt_response)
             dish_type = parsed_response.get("dish_type", "")
             dish_name = parsed_response.get("dish_name", "")
             recipe_steps = parsed_response.get("recipe_steps", [])
 
-            # 숫자 글머리 제거
+            
+            
+            # # ✅ Stable Diffusion을 이용해 요리 이미지 생성
+            if dish_name:
+                image_url = sd.generate_image(dish_name) or ""  # None 방지
+            
+
+            # ✅ 숫자 글머리 제거 (ex. "1. 첫번째 단계" → "첫번째 단계")
             recipe_steps = [re.sub(r'^\d+\.\s*', '', step) for step in recipe_steps]
-            recommended_recipe_name = dish_name  # 추천된 요리 이름 저장
+            recommended_recipe_name = dish_name  
 
             inset_list_data = json.dumps(recipe_steps, ensure_ascii=False)
 
+            # ✅ DB 저장
             with mysql_rdb_conn() as conn:
                 with conn.cursor() as curs:
                     if settings.GLOBAL_NICKNAME != "게스트":
-                        query = q.insert_list_recom()
-                        if not query:  # SQL 쿼리가 None인지 체크
-                            raise ValueError("q.insert_list_recom()이 None을 반환하고 있습니다.")
-
+                        query = """
+INSERT INTO userlist (nickname, recom_rec_name, list, image_url, prompt)
+VALUES (%s, %s, %s, %s, %s)
+"""
+                        # # image_url이 None이면 SQL에서 NULL을 허용하도록 설정
+                        # image_url = image_url if image_url else "NULL"
+                        
                         insert_data_into_users_list = (
-                        settings.GLOBAL_NICKNAME, recommended_recipe_name, inset_list_data)
+                            settings.GLOBAL_NICKNAME,  
+                            recommended_recipe_name,
+                            inset_list_data,  
+                            image_url,  
+                            ingredientInput,
+                        )
 
-                        print("Executing Query:", query)  # 디버깅 로그
-                        print("Data:", insert_data_into_users_list)  # 디버깅 로그
+                        print(" Executing Query:", query)
+                        print(" Data:", insert_data_into_users_list)
 
                         curs.execute(query, insert_data_into_users_list)
                         conn.commit()
                     else:
                         messages.add_message(request, messages.ERROR, "게스트는 마이페이지 접속이 불가능합니다.")
+            # #     #db접근 김치볶음밥이 있는지 확인 있으면 db의 파일 가져오기 없음면 생성
+            # if dish_name:
+            #     # 데이터베이스에서 해당 요리가 있는지 확인
+            #     existing_image_url = insert_data_into_users_list(dish_name)  
+            #     # 데이터베이스에서 이미지 URL 가져오기
+
+            #     if existing_image_url:
+            #         image_url = existing_image_url  # 데이터베이스에 이미지가 있으면 사용
+            #     else:
+            #         image_url = generate_image(dish_name) or ""    # 새 이미지 생성
+
+            #         if image_url:  
+            #             insert_data_into_users_list(dish_name, image_url)  # 생성된 이미지를 DB에 저장
+        
+
 
         except json.JSONDecodeError:
-            print("Error: GPT 응답을 JSON으로 변환하는 데 실패했습니다.")
-        except json.JSONDecodeError:
-            dish_type = dish_name = recipe_steps = []
+            print("🚨 JSON 변환 오류: GPT 응답을 JSON으로 변환하는 데 실패했습니다.")
+            dish_type, dish_name, recipe_steps, image_url = "", "", [], ""
+
+        except requests.exceptions.RequestException as e:
+            print(f"🚨 OpenAI API 요청 오류: {e}")
+            messages.add_message(request, messages.ERROR, "OpenAI API 요청 중 오류 발생")
+            return render(request, "blog/result.html", {"error": "OpenAI API 요청 오류"})
+        
+        
 
     return render(request, "blog/result.html", {
         "ingredientInput": ingredientInput,
         "dish_type": dish_type,
         "dish_name": dish_name,
-        "recipe_steps": recipe_steps
+        "recipe_steps": recipe_steps,
+        "image_url": image_url  
     })
-
 
 def result_by_type(request):
     if request.method == 'POST':
