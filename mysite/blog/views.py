@@ -177,7 +177,7 @@ def get_gpt_response(request):
 
     출력 형식:
     {{
-        "dish_type": "[한식, 중식, 일식, 양식 중 하나]",
+        "dish_type": "[한식, 중식, 일식, 양식, 디저트 중 하나]",
         "dish_name": "[요리 이름]",
         "recipe_steps": [
             "1. 첫번째 단계",
@@ -370,8 +370,6 @@ def delete_selected_recipes(request):
             # 숫자로 변환 (잘못된 값 제거)
             selected_ids = [int(id) for id in selected_ids if str(id).isdigit()]
 
-            if not selected_ids:
-                return JsonResponse({"status": "error", "message": "유효한 레시피 ID가 없습니다."})
 
             with connection.cursor() as cursor:
                 format_strings = ','.join(['%s'] * len(selected_ids))
