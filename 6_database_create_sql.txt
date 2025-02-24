@@ -23,7 +23,8 @@ CREATE TABLE userlist (
     recom_rec_name varchar(30),
     list TEXT,
     image_url varchar(512),
-    prompt varchar(255)
+    prompt varchar(255),
+    keyword text,
 );
 
 CREATE TABLE recipe_steps (
